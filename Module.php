@@ -1,10 +1,12 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2014 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-documentation for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-documentation/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-documentation/blob/master/LICENSE.md New BSD License
  */
 
-namespace ApigilityDocumentation;
+namespace ApiToolsDocumentation;
 
 class Module
 {
@@ -18,7 +20,7 @@ class Module
                     ],
                 ],
             ],
-            'apigility-documentation' => [
+            'api-tools-documentation' => [
                 'path' => realpath(__DIR__),
             ],
         ];

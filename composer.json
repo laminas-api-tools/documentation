@@ -1,20 +1,24 @@
 {
-    "name": "zfcampus/apigility-documentation",
-    "description": "Apigility Documentation",
-    "type": "library",
+    "name": "laminas-api-tools/api-tools-documentation",
+    "description": "Laminas API Tools Documentation",
     "license": "BSD-3-Clause",
     "keywords": [
+        "laminas",
+        "api-tools",
         "api",
-        "apigility",
-        "framework",
-        "zf2"
+        "framework"
     ],
-    "homepage": "http://apigility.org/",
+    "homepage": "https://api-tools.getlaminas.org",
     "support": {
-        "email": "apigility-users@zend.com",
-        "irc": "irc://irc.freenode.net/apigility",
-        "source": "https://github.com/zfcampus/apigility-documentation",
-        "issues": "https://github.com/zfcampus/apigility-documentation/issues"
+        "docs": "https://api-tools.getlaminas.org/documentation",
+        "issues": "https://github.com/laminas-api-tools/api-tools-documentation/issues",
+        "source": "https://github.com/laminas-api-tools/api-tools-documentation",
+        "rss": "https://github.com/laminas-api-tools/api-tools-documentation/releases.atom",
+        "chat": "https://laminas.dev/chat",
+        "forum": "https://discourse.laminas.dev"
+    },
+    "config": {
+        "sort-packages": true
     },
     "extra": {
         "branch-alias": {
@@ -23,7 +27,8 @@
         }
     },
     "require": {
-        "php": "^5.6 || ^7.0"
+        "php": "^5.6 || ^7.0",
+        "laminas/laminas-zendframework-bridge": "^1.0"
     },
     "suggest": {
         "erusev/parsedown": ">=0.9.4 for rendering GitHub-flavored Markdown in PHP",
@@ -33,5 +38,8 @@
         "classmap": [
             "Module.php"
         ]
+    },
+    "replace": {
+        "zfcampus/apigility-documentation": "self.version"
     }
 }
