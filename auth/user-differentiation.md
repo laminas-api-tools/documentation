@@ -1,7 +1,7 @@
 User Differentiation
 ====================
 
-Knowing which user is logging into Apigility is not straight forward as you may
+Knowing which user is logging into API Tools is not straight forward as you may
 guess. The Basic and Digest authorization mechanisms rely on an `.htpasswd` or
 `.htdigest` file to store user credentials. This is not how the majority of web
 sites work.
@@ -16,27 +16,27 @@ directly contradicts the purpose of OAuth2.
 We need to authenticate a user before proceeding with an Implicit or
 Authorization Code grant type in order to assign the generated Access Token to
 that authenticated user for future API calls beyond OAuth2. Here is where
-traditional Authentication is useful. We need to secure the `ZF\OAuth2` resource
+traditional Authentication is useful. We need to secure the `Laminas\ApiTools\OAuth2` resource
 prefix to authenticate via an old-fashioned login page and this is where
-[zfcampus/zf-mvc-auth](https://github.com/zfcampus/zf-mvc-auth) comes in.
+[laminas-api-tools/api-tools-mvc-auth](https://github.com/laminas-api-tools/api-tools-mvc-auth) comes in.
 
-As mentioned in another chapter, zf-mvc-auth can force a configured
-Authorization adapter to a given API. The mechanism zf-mvc-auth uses to
+As mentioned in another chapter, api-tools-mvc-auth can force a configured
+Authorization adapter to a given API. The mechanism api-tools-mvc-auth uses to
 accomplish this is via a map of resource prefixes to Authentication Types. When
 you create a custom Authentication adapter, you define the authentication type
 it supports. Let's begin with the configuration:
 
 ```php
 return [
-    'zf-mvc-auth' => [
+    'api-tools-mvc-auth' => [
         'authentication' => [
             'map' => [
                 'DbApi\\V1'  => 'oauth2',
-                'ZF\\OAuth2' => 'session',
+                'Laminas\\ApiTools\\OAuth2' => 'session',
             ],
             'adapters' => [
                 'oauth2' => [
-                    'adapter' => 'ZF\MvcAuth\Authentication\OAuth2Adapter',
+                    'adapter' => 'Laminas\ApiTools\MvcAuth\Authentication\OAuth2Adapter',
                     'storage' => [
                         'adapter'  => 'pdo',
                         'dsn'      => 'mysql:host=localhost;dbname=oauth2',
@@ -63,7 +63,7 @@ since we're dedicated to finding a user to assign an Access Token to.
 Creating an Authentication Adapter
 ----------------------------------
 
-Adapters must implement [ZF\MvcAuth\Authentication\AdapterInterface](https://github.com/TomHAnderson/zf-mvc-auth/blob/master/src/Authentication/AdapterInterface.php)
+Adapters must implement [Laminas\ApiTools\MvcAuth\Authentication\AdapterInterface](https://github.com/TomHAnderson/api-tools-mvc-auth/blob/master/src/Authentication/AdapterInterface.php)
 This interface includes
 
 - `public function provides()` - This function will return the Authentication
@@ -83,7 +83,7 @@ This interface includes
 
 For our examples, we will use a route `/login` where any unauthenticated user
 who does not have their credentials stored in the session and is trying to
-access a resource under `ZF\OAuth2` will be routed to. This route will show the
+access a resource under `Laminas\ApiTools\OAuth2` will be routed to. This route will show the
 login page, let the user post to it, and, if successful, push the userid
 into the session where our adapter will look for it. When a user
 successfully authenticates with this adapter, they will be assigned an
@@ -92,12 +92,12 @@ successfully authenticates with this adapter, they will be assigned an
 ```php
 namespace Application\Authentication\Adapter;
 
-use ZF\MvcAuth\Authentication\AdapterInterface;
-use Zend\Http\Request;
-use Zend\Http\Response;
-use ZF\MvcAuth\Identity\IdentityInterface;
-use ZF\MvcAuth\MvcAuthEvent;
-use Zend\Session\Container;
+use Laminas\ApiTools\MvcAuth\Authentication\AdapterInterface;
+use Laminas\Http\Request;
+use Laminas\Http\Response;
+use Laminas\ApiTools\MvcAuth\Identity\IdentityInterface;
+use Laminas\ApiTools\MvcAuth\MvcAuthEvent;
+use Laminas\Session\Container;
 use Application\Identity;
 
 final class SessionAdapter implements AdapterInterface
@@ -152,8 +152,8 @@ To use this authentication adapter, you must assign it to the
 ```php
 namespace Application;
 
-use ZF\MvcAuth\Authentication\DefaultAuthenticationListener;
-use Zend\EventManager\EventInterface;
+use Laminas\ApiTools\MvcAuth\Authentication\DefaultAuthenticationListener;
+use Laminas\EventManager\EventInterface;
 
 class Module
 {
@@ -171,13 +171,13 @@ class Module
 
 The `Application\Identity\UserIdentity` requires a `getId()` function or public
 `$id` property to return the user identifier of the authenticated user. This
-will be used by zfcampus/zf-oauth2 to assign the user an `AccessToken`,
-`AuthorizationCode`, and `RefreshToken` using the `ZF\OAuth2\Provider\UserId`
+will be used by laminas-api-tools/api-tools-oauth2 to assign the user an `AccessToken`,
+`AuthorizationCode`, and `RefreshToken` using the `Laminas\ApiTools\OAuth2\Provider\UserId`
 server manager alias.
 
 The Basic and Digest authentication can assign the user because they read the
 `.htpasswd` file.  For OAuth2, you must fetch the user using the
-`ZF\OAuth2\Provider\UserId` service alias. You may create your own provider for
+`Laminas\ApiTools\OAuth2\Provider\UserId` service alias. You may create your own provider for
 a custom method of fetching an id.
 
 This is the default:
@@ -185,7 +185,7 @@ This is the default:
 ```php
     'service_manager' => [
         'aliases' => [
-            'ZF\OAuth2\Provider\UserId' => 'ZF\OAuth2\Provider\UserId\AuthenticationService',
+            'Laminas\ApiTools\OAuth2\Provider\UserId' => 'Laminas\ApiTools\OAuth2\Provider\UserId\AuthenticationService',
         ],
     ],
 ```
@@ -201,8 +201,8 @@ Here is an example `UserIdentity`:
 ```php
 namespace Application\Identity;
 
-use ZF\MvcAuth\Identity\IdentityInterface;
-use Zend\Permissions\Rbac\AbstractRole as AbstractRbacRole;
+use Laminas\ApiTools\MvcAuth\Identity\IdentityInterface;
+use Laminas\Permissions\Rbac\AbstractRole as AbstractRbacRole;
 
 final class UserIdentity extends AbstractRbacRole implements IdentityInterface
 {
@@ -245,8 +245,8 @@ final class UserIdentity extends AbstractRbacRole implements IdentityInterface
 Authorization
 -------------
 
-Even with our adapter in place, it still will not secure the ZF\OAuth2 routes
-because they are by default secured with the `ZF\MvcAuth\Identity\GuestIdentitiy`.
+Even with our adapter in place, it still will not secure the Laminas\ApiTools\OAuth2 routes
+because they are by default secured with the `Laminas\ApiTools\MvcAuth\Identity\GuestIdentitiy`.
 So we need to add Authorization to the application:
 
 First we'll extend the onBootstrap we just created:
@@ -277,8 +277,8 @@ And we need to create the `AuthorizationListener` we just configured:
 namespace Application\Authorization;
 
 use Application\Controller\IndexController;
-use ZF\MvcAuth\MvcAuthEvent;
-use ZF\OAuth2\Controller\Auth;
+use Laminas\ApiTools\MvcAuth\MvcAuthEvent;
+use Laminas\ApiTools\OAuth2\Controller\Auth;
 
 final class AuthorizationListener
 {
@@ -298,9 +298,9 @@ final class AuthorizationListener
 }
 ```
 
-Now when a request is made for an implicit grant type through `ZF\OAuth2`, our
+Now when a request is made for an implicit grant type through `Laminas\ApiTools\OAuth2`, our
 new Authentication Adapter will see the user is not authenticated, store the
 user's requested url, and redirect them to `/login` where, after successfully
 logging in, they will be directed back to the oauth2 request. The user will be
-granted access to the `ZF\OAuth2\Controller\Auth::authorize` resource, and they
+granted access to the `Laminas\ApiTools\OAuth2\Controller\Auth::authorize` resource, and they
 will be assigned an Access Token.

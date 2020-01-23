@@ -26,17 +26,17 @@ does not operate directly on `$_POST` or `$_GET`, but instead allows passing the
 validate.
 
 Zend Framework 2 offers an approach similar to the latter, via the
-[`Zend\InputFilter`](http://framework.zend.com/manual/2.3/en/modules/zend.input-filter.intro.html)
+[`Laminas\InputFilter`](http://framework.zend.com/manual/2.3/en/modules/zend.input-filter.intro.html)
 component. This component allows you to describe and validate data sets of arbitrary complexity.
 Additionally, it allows for the ability to both set custom error messages as well as retrieve
-validation error messages in a structured format.  Apigility's
-[zf-content-validation](https://github.com/zfcampus/zf-content-validation) module provides
+validation error messages in a structured format.  API Tools'
+[api-tools-content-validation](https://github.com/laminas-api-tools/api-tools-content-validation) module provides
 functionality for mapping Zend Framework 2 input filters to services, and utilizes [API
 Problem](/api-primer/error-reporting.md#api-problem) in order to return validation error messages to
 the end-user of the API.
 
 
-If the data provided _does_ _not_ overlap with the set described by the input filter, Apigility will
+If the data provided _does_ _not_ overlap with the set described by the input filter, API Tools will
 return a `400 Bad Request` status code. If any portion of the data set _does_ overlap, but is
 invalid, instead a `422 Unprocessable Entity` status will be returned with an
 `application/problem+json` payload that contains a `validation_messages` key.
@@ -57,7 +57,7 @@ Content-Type: application/json
 }
 ```
 
-Apigility will deserialize the data and pass it to the configured input filter, which will then
+API Tools will deserialize the data and pass it to the configured input filter, which will then
 determine that the data is invalid. The following response will be provided:
 
 ```HTTP
@@ -80,7 +80,7 @@ Content-Type: application/problem+json
 }
 ```
 
-Validation errors from Apigility will always follow this format, thereby providing predictability to
+Validation errors from API Tools will always follow this format, thereby providing predictability to
 consumers of your APIs.
 
 HTTP Method-Specific Validation
@@ -92,7 +92,7 @@ However, during a later operation to update a password via `PATCH`, you may be a
 the password. An operation that replaces all details of the user via `PUT` may need to validate each
 and every field representing the user.
 
-The `zf-content-validation` module provides granularity beyond just mapping input filters to
+The `api-tools-content-validation` module provides granularity beyond just mapping input filters to
 services; it also allows you to map input filters to specific HTTP methods for a given service. In
 the case of [REST services](/api-primer/what-is-an-api.md#rest), it also differentiates between
 collection and entity URIs, allowing an input filter for each HTTP method for each.
@@ -101,7 +101,7 @@ Summary
 -------
 
 Zend Framework 2 provides the ability to short-circuit the request lifecycle at any point by
-returning a "response" object. Apigility leverages this fact by registering an event listener
+returning a "response" object. API Tools leverages this fact by registering an event listener
 after [content negotiation](/api-primer/content-negotiation.md) completes, but before the service
 itself executes, ensuring we intercept validation errors early.
 

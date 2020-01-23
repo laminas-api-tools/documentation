@@ -52,12 +52,12 @@ API Documentation
 Deployment
 ----------
 
-- [Deploying Apigility](/deployment/intro.md)
+- [Deploying API Tools](/deployment/intro.md)
 
 Recipes
 -------
 
-- [Adding Apigility to an Existing Project](/recipes/apigility-in-an-existing-zf2-application.md)
+- [Adding API Tools to an Existing Project](/recipes/api-tools-in-an-existing-laminas-mvc-application.md)
 - [Customising Authorization for Specific Identities](/recipes/how-do-i-customize-authorization-for-a-particular-identity.md)
 - [Returning HAL from RPC Services](/recipes/hal-from-rpc.md)
 - [Customizing DB-Connected TableGateways with Features](/recipes/customizing-table-gateway-with-features.md)

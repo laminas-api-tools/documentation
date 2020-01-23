@@ -1,5 +1,5 @@
 Doctrine in Laminas API Tools
-==============================[![Total Downloads](https://poser.pugx.org/laminas-api-tools/api-tools-doctrine/downloads)](https://packagist.org/packages/laminas-api-tools/api-tools-doctrine)
+==============================
 
 This module provides the classes for integrating Doctrine with Laminas API Tools.
 

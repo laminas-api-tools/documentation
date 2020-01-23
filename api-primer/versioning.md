@@ -83,24 +83,24 @@ This is a situation where [version control](http://en.wikipedia.org/wiki/Revisio
 necessarily help you here. While you should definitely track your code in version control, you will
 still need parallel versions of the code to execute.
 
-Apigility solves this by using versioned PHP _namespaces_. Each time you create a new version of
+API Tools solves this by using versioned PHP _namespaces_. Each time you create a new version of
 your API, all code is cloned into a new PHP namespace that includes the API version.
 
-Versioning in Apigility
+Versioning in API Tools
 -----------------------
 
-Apigility provides both [URL versioning](#url-versioning) as well as [media type
+API Tools provides both [URL versioning](#url-versioning) as well as [media type
 versioning](#media-type-versioning). URL versioning is on by default, but optional; you need only
 prefix any API service URI with `/v<version>/` to access a given version.
 
-Each API created by Apigility is given a custom media type; you can see what that media type looks
+Each API created by API Tools is given a custom media type; you can see what that media type looks
 like in the "Content Negotiation" section for each service. The basic format is 
 `application/vnd.<apiname>.v<version>+json`, where the API name is normalized to
 lowercase, dash-separated words.
 
 Note that the media type is specific to the API, not the individual services within the API; if you
 want more granularity, you can define your own media types for each service. To simplify your job,
-the [zf-versioning](https://github.com/zfcampus/zf-versioning) module already provides matchers for
+the [api-tools-versioning](https://github.com/laminas-api-tools/api-tools-versioning) module already provides matchers for
 the format `application/vnd.<api name>.<service name>.v<version>+json`. If you use that format, you
 will not need to write any custom code for matching the versioned media type.
 
@@ -110,6 +110,6 @@ Summary
 If you are only growing your API, adding services and fields, you may be able to get away without
 versioning. However, for most long-lived APIs, versioning is typically inevitable.
 
-Apigility provides versioning immediately upon creation of an API, via both URI and media type,
-ensuring future expandability of your API. For more information on Apigility's versioning features,
+API Tools provides versioning immediately upon creation of an API, via both URI and media type,
+ensuring future expandability of your API. For more information on API Tools' versioning features,
 read the [versioning](/versioning/index.md) chapter.

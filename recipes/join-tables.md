@@ -10,8 +10,8 @@ one or more other tables; how to I accomplish this?
 Answer
 ------
 
-zend-db provides SQL JOIN syntax via its `Zend\Db\Sql` subcomponent. However,
-DB-Connected REST services use `Zend\Db\TableGateway`, which does not provide
+zend-db provides SQL JOIN syntax via its `Laminas\Db\Sql` subcomponent. However,
+DB-Connected REST services use `Laminas\Db\TableGateway`, which does not provide
 this out-of-the-box. As such, we will need to make a few changes to our
 application to make this work.
 
@@ -87,9 +87,9 @@ statements. Generally speaking, you will create a SQL instance, from which you
 will generate a `Select` object.
 
 ```php
-use Zend\Db\Sql\Sql;
+use Laminas\Db\Sql\Sql;
 
-// Where $adapter is a Zend\Db\Adapter\AdapterInterface instance
+// Where $adapter is a Laminas\Db\Adapter\AdapterInterface instance
 $sql = new Sql($adapter);
 $select = $sql->select();
 ```
@@ -141,7 +141,7 @@ resource, and, with a little work, have it returning your entities and
 collections.
 
 For DB-Connected resources, though, we now need to integrate it into our
-Apigility application.
+API Tools application.
 
 ### Integrating the JOIN
 
@@ -152,8 +152,8 @@ facilities available to change behavior. In fact, when you create a DB-Connected
 service, it only creates the entity and collection classes, and configuration!
 
 Behind every DB-Connected service are two classes. The first is a
-`ZF\Apigility\DbConnectedResource`, and the other is a
-`Zend\Db\TableGateway\TableGateway`; the former delegates to the latter.
+`Laminas\ApiTools\DbConnectedResource`, and the other is a
+`Laminas\Db\TableGateway\TableGateway`; the former delegates to the latter.
 Creation of these is configuration-driven: the configuration values generated
 when you create a DB-Connected resource are used to provide resource-specific
 behavior.
@@ -170,8 +170,8 @@ JOIN statements in zend-db from above to create two new methods,
 // in modules/Users/src/V1/Rest/Users/UsersTableGateway.php:
 namespace Users\V1\Rest\Users;
 
-use Zend\Db\TableGateway\TableGateway;
-use Zend\Paginator\Adapter\DbSelect;
+use Laminas\Db\TableGateway\TableGateway;
+use Laminas\Paginator\Adapter\DbSelect;
 
 class UsersTableGateway extends TableGateway
 {
@@ -205,7 +205,7 @@ class UsersTableGateway extends TableGateway
 You'll note a couple differences in these implementations from the original pure
 zend-db examples we had earlier.
 
-First, instead of manually instantiating a `Zend\Db\Sql\Sql` instance, we pull
+First, instead of manually instantiating a `Laminas\Db\Sql\Sql` instance, we pull
 it from the table gateway instance directly. This is useful, as it already has
 knowledge of both our adapter, _and the table_ we want to pull from. This latter
 fact allows us to eliminate the `from()` statement.
@@ -213,13 +213,13 @@ fact allows us to eliminate the `from()` statement.
 The next difference is in how we get our results.
 
 When retrieving a single user, we can use a method of the `TableGateway` itself,
-`selectWith()`. This method accepts a `Zend\Db\Sql\Select` instance, and then
+`selectWith()`. This method accepts a `Laminas\Db\Sql\Select` instance, and then
 returns a result set representing the results of executing the statement.
 
 When retrieving multiple users, we can capitalize on the fact that we know that
 for our own context, we want to return a _paginated_ set of results, and thus
 return a pagination adapter. The appropriate one for us is
-`Zend\Paginator\Adapter\DbSelect`, which expects the `Select` instance itself,
+`Laminas\Paginator\Adapter\DbSelect`, which expects the `Select` instance itself,
 plus a database adapter and result set prototype &mdash; which we can retrieve
 from the table gateway itself.
 
@@ -228,7 +228,7 @@ configured, though? We need to make sure it is getting a `HydratingResultSet` so
 that we get back our `UserEntity` instances, and we need to make sure it's
 getting the correct table name and database adapter.
 
-We can do that by creating a factory. A `Zend\Db\TableGateway\TableGateway`
+We can do that by creating a factory. A `Laminas\Db\TableGateway\TableGateway`
 instance expects up to five arguments:
 
 - The table name.
@@ -238,7 +238,7 @@ instance expects up to five arguments:
 - A result set prototype instance.
 - A `Sql` instance to use as a prototype.
 
-zf-apigility generally provides the first four arguments only, and supplies a
+api-tools generally provides the first four arguments only, and supplies a
 `null` value for the third. We'll do similarly in the factory we create.
 
 ```php
@@ -246,8 +246,8 @@ zf-apigility generally provides the first four arguments only, and supplies a
 namespace Users\V1\Rest\Users;
 
 use Psr\Container\ContainerInterface;
-use Zend\Db\ResultSet\HydratingResultSet;
-use Zend\Hydrator\ArraySerializable;
+use Laminas\Db\ResultSet\HydratingResultSet;
+use Laminas\Hydrator\ArraySerializable;
 
 class UsersTableGatewayFactory
 {
@@ -290,7 +290,7 @@ tell the resource to use these new methods.
 ### Updating the resource
 
 As noted earlier, DB-Connected services use a configuration-backed
-`ZF\Apigility\DbConnectedResource`. zf-apigility creates an instance of that
+`Laminas\ApiTools\DbConnectedResource`. api-tools creates an instance of that
 class which then performs the various operations you allow. In order to use our
 new table gateway functionality, we will need to _extend_ that class, _override_
 the relevent methods, and tell the container to use our new class.
@@ -304,7 +304,7 @@ First, we will create a new class named after the resource already created for u
 namespace Users\V1\Rest\Users;
 
 use DomainException;
-use ZF\Apigility\DbConnectedResource;
+use Laminas\ApiTools\DbConnectedResource;
 
 class UsersResource extends DbConnectedResource
 {
@@ -380,7 +380,7 @@ We also need to wire this into the service manager, so edit the
 
 What we have done at this point is take a resource originally defined as a
 DB-Connected resource, and make it into a normal REST resource. None of the
-`zf-apigility.db-connected` configuration for our
+`api-tools.db-connected` configuration for our
 `Users\V1\Rest\Users\UsersResource` is relevant any more, as we are now defining
 the resource and its dependencies explicitly. As such, you can remove that entry
 from the configuration, and will find everything continues to work.

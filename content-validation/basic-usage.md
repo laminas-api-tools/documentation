@@ -1,17 +1,17 @@
 Basic Usage
 ===========
 
-The [zf-content-validation](https://github.com/zfcampus/zf-content-validation) module utilizes
-[Zend Framework's InputFilter component](http://framework.zend.com/manual/2.3/en/modules/zend.input-filter.intro.html).
-Apigility takes information from the UI and writes it to the target API's module configuration file.
+The [api-tools-content-validation](https://github.com/laminas-api-tools/api-tools-content-validation) module utilizes
+[Zend Framework's InputFilter component](https://docs.laminas.dev/laminas-inputfilter).
+API Tools takes information from the UI and writes it to the target API's module configuration file.
 For more information on the theory of input filters, [read the Content Validation
 introduction](/content-validation/intro.md).
 
-To configure an input filter in the Apigility UI, browse to the API, then the service.  From there,
+To configure an input filter in the API Tools UI, browse to the API, then the service.  From there,
 you can see if an existing input filter exist in the "Fields" tab of the service's content.
 You can add a new field using the "New field" button.
 
-![Content Validation Fields](/asset/apigility-documentation/img/content-validation-basic-usage-fields.jpg)
+![Content Validation Fields](/asset/api-tools-documentation/img/content-validation-basic-usage-fields.jpg)
 
 For each field, the same information that is utilized to build an input filter from a factory
 in ZF2 is the same information that this UI screen will collect to create a service input filter.
@@ -25,13 +25,13 @@ Each field will accept configuration for the field:
 - A variety of optional _filters_.
 - A variety of optional _validators_.
 
-When the save button is clicked, this information is sent back to the Apigility API and the
+When the save button is clicked, this information is sent back to the API Tools API and the
 information is then stored in the API's module configuration file, under two separate keys: the
-`zf-content-validation` key and the `input_filter_specs` key.  Here is a sample:
+`api-tools-content-validation` key and the `input_filter_specs` key.  Here is a sample:
 
 ```php
 return [
-    'zf-content-validation' => [
+    'api-tools-content-validation' => [
         'AddressBook\\V1\\Rest\\Contact\\Controller' => [
             'input_filter' => 'AddressBook\\V1\\Rest\\Contact\\Validator',
         ],
@@ -52,7 +52,7 @@ return [
                 'filters' => [],
                 'validators' => [
                     0 => [
-                        'name' => 'Zend\\Validator\\EmailAddress',
+                        'name' => 'Laminas\\Validator\\EmailAddress',
                         'options' => array(),
                     ],
                 ],
@@ -65,7 +65,7 @@ return [
                 'filters' => [],
                 'validators' => [
                     0 => [
-                        'name' => 'Zend\\Validator\\Digits',
+                        'name' => 'Laminas\\Validator\\Digits',
                         'options' => [],
                     ],
                 ],
@@ -95,30 +95,30 @@ response](/api-primer/error-reporting.md) will be returned immediately.
 
 > ## Note: Controller Service Name
 >
-> The _controller service name_ is the internal name for the service within Apigility, and
+> The _controller service name_ is the internal name for the service within API Tools, and
 > is representative of the code that the Zend Framework 2 MVC layer will execute when routing
 > matches the given service.
 
 Accessing Filtered Data
 -----------------------
 
-`zf-content-validation` leaves the request intact once validation is complete. This means that if
+`api-tools-content-validation` leaves the request intact once validation is complete. This means that if
 you access the request data directly, or, in the case of REST resources, receive request data, you
 will have the original, unfiltered data.
 
 If you have performed data normalization as part of your field definition by defining filters, you
 will likely want the normalized data!
 
-Apigility provides several ways to do this.
+API Tools provides several ways to do this.
 
 ### Accessing the input filter via RPC controllers
 
-`zf-content-validation` injects the application's `MvcEvent` with the selected input filter once
+`api-tools-content-validation` injects the application's `MvcEvent` with the selected input filter once
 validation is complete. You can access it via the event parameter
-`ZF\ContentValidation\InputFilter`:
+`Laminas\ApiTools\ContentValidation\InputFilter`:
 
 ```php
-$inputFilter = $event->getParam('ZF\ContentValidation\InputFilter');
+$inputFilter = $event->getParam('Laminas\ApiTools\ContentValidation\InputFilter');
 ```
 
 RPC controllers compose the `MvcEvent`, and you can access it via the `getEvent()` method of your
@@ -126,7 +126,7 @@ controller; thus, to access the input filter, execute the following:
 
 ```php
 $event = $this->getEvent();
-$inputFilter = $event->getParam('ZF\ContentValidation\InputFilter');
+$inputFilter = $event->getParam('Laminas\ApiTools\ContentValidation\InputFilter');
 ```
 
 Be aware that the input filter may not be defined! Test it before performing operations on it:
@@ -139,7 +139,7 @@ if ($inputFilter) {
 
 ### Accessing the input filter from REST resources
 
-Apigility injects the `ResourceEvent` for REST resources with any input filter discovered in the
+API Tools injects the `ResourceEvent` for REST resources with any input filter discovered in the
 `MvcEvent`. Further, the base `AbstractResourceListener` provides a `getInputFilter()` method that
 proxies to the `ResourceEvent` to give you access to the input filter:
 
@@ -168,9 +168,9 @@ filter via constructor injection (along with a mapper object we've defined):
 ```php
 namespace AddressBook\V1\Rest\Contact;
 
-use Zend\InputFilter\InputFilterInterface;
-use ZF\ApiProblem\ApiProblem;
-use ZF\Rest\AbstractResourceListener;
+use Laminas\InputFilter\InputFilterInterface;
+use Laminas\ApiTools\ApiProblem\ApiProblem;
+use Laminas\ApiTools\Rest\AbstractResourceListener;
 
 class ContactResource extends AbstractResourceListener
 {

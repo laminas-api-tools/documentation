@@ -1,7 +1,7 @@
 Getting Started
 ===============
 
-Now that you have installed Apigility, it's time to visit it.
+Now that you have installed Laminas API Tools, it's time to visit it.
 
 Assumptions
 -----------
@@ -11,14 +11,14 @@ application root is available at the URL `http://localhost:8080/`.
 
 > ### Note: File System Permissions
 >
-> The Apigility Admin UI writes to the application's filesystem, specifically in the `module/` and
+> The API Tools Admin UI writes to the application's filesystem, specifically in the `module/` and
 > `config/` directories. As such, the user under which the web server runs **must** have permissions
-> to write to those directories and to files inside those directories. Apigility contains some logic
+> to write to those directories and to files inside those directories. API Tools contains some logic
 > to detect if permissions are not set correctly, and will raise an warning dialog if it detects
 > this situation. If you see such a dialog, use your operating system tools to set the file system
 > permissions accordingly.
 >
-> When _deploying_ an Apigility-based application, however, you do not need write permissions to
+> When _deploying_ an API Tools-based application, however, you do not need write permissions to
 > these directories; you only need the write permissions during development.
 
 First Steps
@@ -26,19 +26,19 @@ First Steps
 
 Visit the url `http://locahost:8080/`, which will look like this:
 
-![Apigility Welcome Screen](/asset/apigility-documentation/img/intro-getting-started-welcome.png)
+![API Tools Welcome Screen](/asset/api-tools-documentation/img/intro-getting-started-welcome.png)
 
 Create an API
 -------------
 
 Now it's time to create your first API. Click the "New API" button on the sidebar of the screen:
 
-![Apigility APIs Screen](/asset/apigility-documentation/img/intro-getting-started-apis.png)
+![API Tools APIs Screen](/asset/api-tools-documentation/img/intro-getting-started-apis.png)
 
 For this exercise, we'll create an API called "Status"; type that for the "API Name", and press the
 "Create" button. When it completes, you'll be taken to an API overview screen:
 
-![Apigility API Overview Screen](/asset/apigility-documentation/img/intro-getting-started-status-api-v1.png)
+![API Tools API Overview Screen](/asset/api-tools-documentation/img/intro-getting-started-status-api-v1.png)
 
 Create an RPC Service
 ---------------------
@@ -46,26 +46,26 @@ Create an RPC Service
 Now we'll create our first service. Click on the button "New Service" and select the "RPC" tab in the modal
 window:
 
-![Apigility RPC Services Screen](/asset/apigility-documentation/img/intro-getting-started-rpc-services.png)
+![API Tools RPC Services Screen](/asset/api-tools-documentation/img/intro-getting-started-rpc-services.png)
 
 Provide the value "Ping" for the "Service name", and the value "/ping" for the "Route to match";
 then click the "Create service" button to create the service.
 
 Once created, you will see a page like that:
 
-![Apigility RPC Service](/asset/apigility-documentation/img/intro-getting-started-ping-service-view.png)
+![API Tools RPC Service](/asset/api-tools-documentation/img/intro-getting-started-ping-service-view.png)
 
 The defaults for this RPC service will work fine for us. However, let's document it a bit.
 
 Click the "Fields" tab and then click to "New field" button as reported here:
 
-![Fields Tab](/asset/apigility-documentation/img/intro-getting-started-ping-service-fields-view.png)
+![Fields Tab](/asset/api-tools-documentation/img/intro-getting-started-ping-service-fields-view.png)
 
 Enter the value "ack" for the "Name" and the value "Acknowledge the request with a timestamp" in the
 "Description" field. Finally click click the "Save" button. You will see the "ack" field in the
 list of fields now.
 
-![Edit Field](/asset/apigility-documentation/img/intro-getting-started-ping-service-fields-ack.png)
+![Edit Field](/asset/api-tools-documentation/img/intro-getting-started-ping-service-fields-ack.png)
 
 Right now, our service does nothing. Let's change that.
 
@@ -75,8 +75,8 @@ looks like the code reported below:
 ```php
 namespace Status\V1\Rpc\Ping;
 
-use Zend\Mvc\Controller\AbstractActionController;
-use ZF\ContentNegotiation\ViewModel;
+use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\ApiTools\ContentNegotiation\ViewModel;
 
 class PingController extends AbstractActionController
 {
@@ -89,7 +89,7 @@ class PingController extends AbstractActionController
 }
 ```
 
-The important pieces are the import of the `ZF\ContentNegotiation\ViewModel` class, and the
+The important pieces are the import of the `Laminas\ApiTools\ContentNegotiation\ViewModel` class, and the
 usage of `ViewModel` object in the `pingAction` method.
 
 > ### Controllers and View Models
@@ -138,7 +138,7 @@ Content-Type: application/problem+json
 }
 ```
 
-Apigility defaults to [JSON](http://www.json.org/). If you specify a different media type in the
+API Tools defaults to [JSON](http://www.json.org/). If you specify a different media type in the
 `Accept` header, it reports that it cannot handle it. (You can configure your service later to
 handle other media types, however.)
 
@@ -170,18 +170,18 @@ Content-Type: application/json
 { "timestamp": 1396560875 }
 ```
 
-Apigility reports:
+API Tools reports:
 
 ```HTTP
 HTTP/1.1 405 Method Not Allowed
 Allow: GET
 ```
 
-Apigility takes care of HTTP method negotiation for you. This means if a request is made via a
+API Tools takes care of HTTP method negotiation for you. This means if a request is made via a
 method you have not allowed, it will report this to the user with a `405` status code, and also
 report which methods _are_ allowed via the `Allow` response header.
 
-You can also ask Apigility which methods are allowed via the `OPTIONS` request:
+You can also ask API Tools which methods are allowed via the `OPTIONS` request:
 
 ```HTTP
 OPTIONS /ping HTTP/1.1

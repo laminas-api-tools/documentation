@@ -1,17 +1,17 @@
-Deploying Apigility
+Deploying API Tools
 ===================
 
-You've developed an API using Apigility, you've finished testing and documenting, and now you are
+You've developed an API using API Tools, you've finished testing and documenting, and now you are
 ready to push to production. How do you deploy the API?
 
-Since Apigility 1.1 we added in the Admin UI the "Package page" that can be used to create the
+Since API Tools 1.1 we added in the Admin UI the "Package page" that can be used to create the
 package file containing the APIs ready for deployment.
 
-![API Package](/asset/apigility-documentation/img/api-package-menu.png)
+![API Package](/asset/api-tools-documentation/img/api-package-menu.png)
 
-The package feature of Apigility is based on the usage of [ZFDeploy](https://github.com/zfcampus/zf-deploy),
-a command line tool to package [Zend Framework 2](http://framework.zend.com/) application in a
-single file ready to be deployed.
+The package feature of API Tools is based on the usage of [zf-deploy](https://github.com/zfcampus/zf-deploy),
+a command line tool to package [Zend Framework](http://framework.zend.com/) (and
+Laminas MVC) applications in a single file ready to be deployed.
 
 Preparing to deploy
 -------------------
@@ -19,9 +19,9 @@ Preparing to deploy
 A couple items to consider when preparing to deploy are (a) production configuration, and (b) the
 landing page of your application.
 
-Apigility builds on the Zend Framework 2 skeleton. This skeleton includes configuration for where to
+API Tools builds on the Laminas MVC skeleton. This skeleton includes configuration for where to
 find configuration files, as well as version control rules for excluding what is dubbed "local"
-configuration. Essentially, ZF looks for application configuration files in the `config/autoload/`
+configuration. Essentially, the MVC looks for application configuration files in the `config/autoload/`
 tree, and has separate globs for those suffixed with `global.php` and those suffixed with
 `local.php`; additionally, the latter, "local" files are omitted from version control by default.
 _This makes them the recommended location for environment specific configuration, and particularly
@@ -31,25 +31,25 @@ We recommend keeping your production configuration separate from the application
 can mean storing them in a separate, private repository -- for example, scripts that are uploaded
 with tools such as [Chef](http://www.getchef.com/chef/), [Puppet](http://www.puppetlabs.com/), or
 [Ansible](http://www.ansible.com/). Alternately, if you keep this information in another repository,
-you can also use the ZFDeploy tool, outlined below, to slurp in the production configuration when
+you can also use the zf-deploy tool, outlined below, to slurp in the production configuration when
 creating a deployment package.
 
-Regarding the landing page of your application, if you use the Apigility skeleton application, the
-"home page" by default redirects to the Apigility welcome page -- which is disabled when in
+Regarding the landing page of your application, if you use the API Tools skeleton application, the
+"home page" by default redirects to the API Tools welcome page -- which is disabled when in
 production mode! As such, we recommend altering your
 `Application\Controller\IndexController::indexAction()` method to do something other than redirect,
 or to redirect to another page. This will mean removing the following line:
 
 ```php
 // in module/Application/src/Application/Controller/IndexController.php:
-return $this->redirect()->toRoute('zf-apigility/welcome');
+return $this->redirect()->toRoute('api-tools/welcome');
 ```
 
 and replacing it with something else; for example, to have it redirect to your end-user HTML API
 documentation:
 
 ```php
-return $this->redirect()->toRoute('zf-apigility/documentation');
+return $this->redirect()->toRoute('api-tools/documentation');
 ```
 
 > ### Update the home page!
@@ -57,18 +57,18 @@ return $this->redirect()->toRoute('zf-apigility/documentation');
 > The landing page for your application will **not** work, _and will in fact raise an error_ if you do
 > not make the changes to the landing page as recommended above!
 
-Deploy using Apigility Admin UI
+Deploy using API Tools Admin UI
 -------------------------------
 
-If you are using the Apigility Admin UI you can deploy your APIs in one click! Just go to the "Package"
+If you are using the API Tools Admin UI you can deploy your APIs in one click! Just go to the "Package"
 page, select the APIs to be included in the package, and click the "Generate package" button.
 
-![API Package](/asset/apigility-documentation/img/api-package-generate.png)
+![API Package](/asset/api-tools-documentation/img/api-package-generate.png)
 
-Apigility will generate a .ZIP file (default format) to be downloaded, that's it!
+API Tools will generate a .ZIP file (default format) to be downloaded, that's it!
 You can deploy this file in any PHP environments, including cloud infrastructures.
 
-Apigility supports different file format for the package: ZIP, TAR, TGZ (TAR.GZ), and ZPK, the file
+API Tools supports different file format for the package: ZIP, TAR, TGZ (TAR.GZ), and ZPK, the file
 format used by [Zend Server](http://www.zend.com/en/products/server).  
 
 You can check the "Execute composer" option to include the composer install in the package.
@@ -85,7 +85,7 @@ testing one, so you can use this option to manage this difference.
 Manual deployment using Composer
 --------------------------------
 
-One way to deploy an Apigility application is to use [Composer](https://getcomposer.org) to create a
+One way to deploy an API Tools application is to use [Composer](https://getcomposer.org) to create a
 production package. This method requires the following 3 steps:
 
 ### Composer: Step 1
@@ -133,14 +133,14 @@ mechanism.
 ### Notes on deployment
 
 One of the most important parts in the previous steps is the usage of the `.gitignore` file to omit
-development configuration files. When you deploy an Apigility application in production you must be
+development configuration files. When you deploy an API Tools application in production you must be
 sure that the files are aligned with the production environment.
 
-Here are some specific Apigility files that you must omit in production:
+Here are some specific API Tools files that you must omit in production:
 
-- `config/development.config.php`: If this file is present, Apigility will be executed in
-  "development mode," enabling the Admin UI publicly via the `/apigility` URL.  You can switch off
-  development mode in Apigility using the following command from the root of your project:
+- `config/development.config.php`: If this file is present, API Tools will be executed in
+  "development mode," enabling the Admin UI publicly via the `/api-tools` URL.  You can switch off
+  development mode in API Tools using the following command from the root of your project:
   `php public/index.php development disable`.
 
 - `config/autoload/*.local.php` files are releated to your local environment.  Usually these files
@@ -175,7 +175,7 @@ need to:
 To create an API key, first navigate to the "Administration" screen, and the "Web API" panel within
 that screen:
 
-![Zend Server Web API Screen](/asset/apigility-documentation/img/deployment-intro-zfdeploy-create-api-key.png)
+![Zend Server Web API Screen](/asset/api-tools-documentation/img/deployment-intro-zfdeploy-create-api-key.png)
 
 Click the "Add Key" button, and follow the instructions. You will likely need to assign the key
 administrator permissions in order to allow deployment.

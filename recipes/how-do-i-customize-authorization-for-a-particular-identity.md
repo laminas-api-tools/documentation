@@ -14,22 +14,22 @@ identity other than "guest" will be part of the system.  It is also important th
 and learned the limitations of the existing authorization setup.
 
 One of the limitations of the current authorization system is that authorization is limited to
-granting access to users based on whether they are an unauthenticated user (which, in Apigility,
+granting access to users based on whether they are an unauthenticated user (which, in API Tools,
 goes by the identity "guest") or an authenticated user, whose identity will be stored in the
-`ZF\MvcAuth\Identity\AuthenticatedIdentity` model.
+`Laminas\ApiTools\MvcAuth\Identity\AuthenticatedIdentity` model.
 
 As mentioned in the [advanced authentication and authorization](/auth/advanced.md) section, there are
 a few things that need to be known and taken into account in order to achieve our goal:
 
-* The `AclAuthorizationFactory` will produce a `Zend\Permissions\Acl` type of object with the
-  information that was written to a config file, provided by the Apigility UI.
+* The `AclAuthorizationFactory` will produce a `Laminas\Permissions\Acl` type of object with the
+  information that was written to a config file, provided by the API Tools UI.
 
-* The `AuthorizationService` is composed in the `ZF\MvcAuth\MvcAuthEvent`, which is accessible to
+* The `AuthorizationService` is composed in the `Laminas\ApiTools\MvcAuth\MvcAuthEvent`, which is accessible to
   all `MvcAuth` events.
 
-* The `MvcAuth::AUTHENTICATION` event has a `ZF\MvcAuth\Authorization\DefaultAuthorizationListener`
+* The `MvcAuth::AUTHENTICATION` event has a `Laminas\ApiTools\MvcAuth\Authorization\DefaultAuthorizationListener`
   that is responsible for ultimately calling `isAuthorized()`, and returning this result to be
-  used by `MvcAuth` or Apigility in order to determine how to respond to the client's request.
+  used by `MvcAuth` or API Tools in order to determine how to respond to the client's request.
 
 Knowing these things, the easiest solution would be to write a listener that will execute before
 the `DefaultAuthorizationListener`, and modify the `AuthorizationService`/`ACL` in order to set our
@@ -40,10 +40,10 @@ For the purposes of this example, we'll place our listener in the `Application` 
 ```php
 namespace Application;
 
-use Zend\Mvc\MvcEvent;
-use Zend\Mvc\ModuleRouteListener;
+use Laminas\Mvc\MvcEvent;
+use Laminas\Mvc\ModuleRouteListener;
 use Application\Authorization\AuthorizationListener;
-use ZF\MvcAuth\MvcAuthEvent;
+use Laminas\ApiTools\MvcAuth\MvcAuthEvent;
 
 class Module
 {
@@ -70,17 +70,17 @@ Lastly, we'll need to construct our listener.  Refer to the inline comments:
 ```php
 namespace Application\Authorization;
 
-use ZF\MvcAuth\MvcAuthEvent;
+use Laminas\ApiTools\MvcAuth\MvcAuthEvent;
 
 class AuthorizationListener
 {
     public function __invoke(MvcAuthEvent $mvcAuthEvent)
     {
-        /** @var \ZF\MvcAuth\Authorization\AclAuthorization $authorization */
+        /** @var \Laminas\ApiTools\MvcAuth\Authorization\AclAuthorization $authorization */
         $authorization = $mvcAuthEvent->getAuthorizationService();
 
         /**
-         * Regardless of how our configuration is currently through via the Apigility UI,
+         * Regardless of how our configuration is currently through via the API Tools UI,
          * we want to ensure that the default rule for the service we want to give access
          * to a particular identity has a DENY BY DEFAULT rule.  In our case, it will be
          * for our FooBar\V1\Rest\Foo\Controller's collection method GET.

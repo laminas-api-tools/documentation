@@ -12,7 +12,7 @@ For JSON APIs, though, two formats are starting to achieve large adoption:
 support for the latter, which goes by the cumbersome title of [Problem Details for HTTP
 APIs](https://tools.ietf.org/html/rfc7807); API Tools refers to it as
 `API Problem` and provides support for it via the
-[zf-api-problem](https://github.com/zfcampus/zf-api-problem) module.
+[api-tools-api-problem](https://github.com/laminas-api-tools/api-tools-api-problem) module.
 
 API Problem
 -----------

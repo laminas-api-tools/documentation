@@ -10,12 +10,12 @@ Answer
 ------
 
 Zend Framework 2 provides a variety of classes surrounding file upload functionality, including
-[a set of validators](http://framework.zend.com/manual/2.3/en/modules/zend.validator.file.html)
+[a set of validators](https://docs.laminas.dev/laminas-validator/validators/file/intro/)
 (used to validate whether the file was uploaded, as well as whether it meets specific criteria such
 as file size, extension, MIME type, etc.),
-[a set of filters](http://framework.zend.com/manual/2.3/en/modules/zend.filter.file.html) (used to
+[a set of filters](https://docs.laminas.dev/laminas-filter/file/) (used to
 allow renaming an uploaded file, as well as, more rarely, to manipulate the contents of the file),
-and [file-upload-specific inputs for input filters](http://framework.zend.com/manual/2.3/en/modules/zend.input-filter.file-input.html)
+and [file-upload-specific inputs for input filters](https://docs.laminas.dev/laminas-inputfilter/file-input/)
 (because validation of files needs to follow different rules than regular data).
 
 ### Adding the MIME type
@@ -56,7 +56,7 @@ image, and so on. The problems with this approach are numerous:
   if one part does not pass the whitelist -- is the entire request rejected?
 
 Due to the difficulties with both sending `multipart/mixed` responses as well as handling them,
-Apigility does not support that media type at this time.
+API Tools does not support that media type at this time.
 
 Now, finally, we'll look at the middle option, `multipart/form-data`. This media type is natively
 supported by every client we've reviewed, and, in fact, is the only multipart type that is available
@@ -76,21 +76,21 @@ There are still some down-sides to using `multipart/form-data`:
 - Nested structures are difficult to handle properly. Typically, you will need to serialize them on
   the client-side, and have logic server-side to deserialize.
 - Most clients will pass a media type of `application/octet-stream` for any files sent as part of a
-  `multipart/form-data` payload. `Zend\Validator\File\*` usually handles this situation well,
+  `multipart/form-data` payload. `Laminas\Validator\File\*` usually handles this situation well,
   however.
 
 **In order to upload files using `multipart/form-data` in your API, you will need to add the media
 type to the Content Type Whitelist for your service.**
 
-![Add multipart/form-data to Content-Type whitelist](/asset/apigility-documentation/img/recipes-upload-files-to-api-content-type-whitelist.png)
+![Add multipart/form-data to Content-Type whitelist](/asset/api-tools-documentation/img/recipes-upload-files-to-api-content-type-whitelist.png)
 
 Once that is done, you can follow the rest of this tutorial to handle file uploads.
 
 ### Configuring the field representing the file upload
 
-Apigility allows you to mark a field as a file upload:
+API Tools allows you to mark a field as a file upload:
 
-![Mark a field as a file upload](/asset/apigility-documentation/img/recipes-upload-files-to-api-edit-field.png)
+![Mark a field as a file upload](/asset/api-tools-documentation/img/recipes-upload-files-to-api-edit-field.png)
 
 You **must** mark this if the field will be used for file uploads; failure to do so will mean the
 validators you select will not run correctly.
@@ -98,16 +98,16 @@ validators you select will not run correctly.
 Once you have done that, you may add filters and validators. We recommend the following:
 
 - Filters
-  - `Zend\Filter\File\RenameUpload` is used to rename the upload file. We recommend doing this, and
+  - `Laminas\Filter\File\RenameUpload` is used to rename the upload file. We recommend doing this, and
     setting the appropriate `target` directory (this can often be somewhere in your `data/` path),
     and enabling the `randomize` flag (which both prevents file collisions, as well as ensures the
     filename cannot contain characters that might lead to overwriting existing files).
 - Validators
-  - `Zend\Validator\File\MimeType` can be used to prevent files that do not fall within a defined
+  - `Laminas\Validator\File\MimeType` can be used to prevent files that do not fall within a defined
     set of MIME types from being successfully uploaded.
-  - `Zend\Validator\File\IsImage` can be used to determine whether the file is an image file.
+  - `Laminas\Validator\File\IsImage` can be used to determine whether the file is an image file.
 
-`Zend\InputFilter\FileInput` also automatically adds the `Zend\Validator\File\UploadFile` validator,
+`Laminas\InputFilter\FileInput` also automatically adds the `Laminas\Validator\File\UploadFile` validator,
 which will cause the validation to fail if the upload cannot complete.
 
 ### Completing the upload and retrieving the filename
@@ -117,7 +117,7 @@ upload and retrieve the information from within your service classes. First, you
 input filter.
 
 - In a REST service, use this: `$inputFilter = $this->getInputFilter();`
-- In an RPC service, use this: `$inputFilter = $this->getEvent()->getParam('ZF\ContentValidation\InputFilter');`
+- In an RPC service, use this: `$inputFilter = $this->getEvent()->getParam('Laminas\ApiTools\ContentValidation\InputFilter');`
 
 Now that you have the input filter, call its `getValues()` method to get all filtered, validated
 values:
