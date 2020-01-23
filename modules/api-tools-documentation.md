@@ -1,7 +1,7 @@
-# ZF Apigility Documentation
+# Laminas API Tools Documentation
 ## Introduction
 
-This Zend Framework module can be used with conjunction with Apigility in order to:
+This Laminas module can be used with conjunction with Laminas API Tools in order to:
 
 - provide an object model of all captured documentation information, including:
   - All APIs available.
@@ -15,26 +15,26 @@ This Zend Framework module can be used with conjunction with Apigility in order 
   - end-users may configure alternate/additional formats via content-negotiation.
 
 This module accomplishes all the above use cases by providing an endpoint to connect to
-(`/apigility/documentation[/:api[-v:version][/:service]]`), using content-negotiation to provide
+(`/api-tools/documentation[/:api[-v:version][/:service]]`), using content-negotiation to provide
 both HTML and JSON representations.
 
 ## Requirements
   
-Please see the [composer.json](https://github.com/zfcampus/zf-apigility-documentation/tree/master/composer.json) file.
+Please see the [composer.json](https://github.com/laminas-api-tools/api-tools-documentation/tree/master/composer.json) file.
 
 ## Installation
 
 Run the following `composer` command:
 
 ```console
-$ composer require zfcampus/zf-apigility-documentation
+$ composer require laminas-api-tools/api-tools-documentation
 ```
 
 Alternately, manually add the following to your `composer.json`, in the `require` section:
 
 ```javascript
 "require": {
-    "zfcampus/zf-apigility-documentation": "^1.2-dev"
+    "laminas-api-tools/api-tools-documentation": "^1.2-dev"
 }
 ```
 
@@ -48,16 +48,16 @@ return [
     /* ... */
     'modules' => [
         /* ... */
-        'ZF\Apigility\Documentation',
+        'Laminas\ApiTools\Documentation',
     ],
     /* ... */
 ];
 ```
 
-> ### zf-component-installer
+> ### laminas-component-installer
 >
-> If you use [zf-component-installer](https://github.com/zendframework/zf-component-installer),
-> that plugin will install zf-apigility-documentation as a module for you.
+> If you use [laminas-component-installer](https://github.com/laminas/laminas-component-installer),
+> that plugin will install api-tools-documentation as a module for you.
 
 ## Configuration
 
@@ -67,19 +67,19 @@ This module does not utilize any user configuration.
 
 ### System Configuration
 
-The following configuration is defined by the module to ensure operation within a Zend Framework 2
+The following configuration is defined by the module to ensure operation within a Laminas
 MVC application.
 
 ```php
-namespace ZF\Apigility\Documentation;
+namespace Laminas\ApiTools\Documentation;
 
-use Zend\ServiceManager\Factory\InvokableFactory;
-use Zend\View\Model\ViewModel;
+use Laminas\ServiceManager\Factory\InvokableFactory;
+use Laminas\View\Model\ViewModel;
 
 return [
     'router' => [
         'routes' => [
-            'zf-apigility' => [
+            'api-tools' => [
                 'child_routes' => [
                     'documentation' => [
                         'type' => 'segment',
@@ -108,7 +108,7 @@ return [
             Controller::class => ControllerFactory::class,
         ],
     ],
-    'zf-content-negotiation' => [
+    'api-tools-content-negotiation' => [
         'controllers' => [
             Controller::class => 'Documentation',
         ],
@@ -159,37 +159,37 @@ return [
 ];
 ```
 
-## ZF Events
+## Laminas Events
 
 This module has no events or listeners.
 
-## ZF Services
+## Laminas Services
 
 ### View Helpers
 
 The following list of view helpers assist in making API documentation models presentable in view
 scripts.
 
-- `ZF\Apigility\Documentation\View\AgAcceptHeaders` (a.k.a `agAcceptHeaders`) for making a
+- `Laminas\ApiTools\Documentation\View\AgAcceptHeaders` (a.k.a `agAcceptHeaders`) for making a
   list of `Accept` headers, escaped for HTML.
-- `ZF\Apigility\Documentation\View\AgContentTypeHeaders`  (a.k.a `agContentTypeHeaders`) for
+- `Laminas\ApiTools\Documentation\View\AgContentTypeHeaders`  (a.k.a `agContentTypeHeaders`) for
   making a list of `Content-Type` headers, escaped for HTML.
-- `ZF\Apigility\Documentation\View\AgServicePath` (a.k.a `agServicePath`) for making an HTML
+- `Laminas\ApiTools\Documentation\View\AgServicePath` (a.k.a `agServicePath`) for making an HTML
   view representation of the route configuration of a service path.
-- `ZF\Apigility\Documentation\View\AgStatusCodes` (a.k.a `agStatusCodes`) for making an
+- `Laminas\ApiTools\Documentation\View\AgStatusCodes` (a.k.a `agStatusCodes`) for making an
   escaped list of status codes and their messages.
-- `ZF\Apigility\Documentation\View\AgTransformDescription` (a.k.a `agTransformDescription`) for transforming the written 
+- `Laminas\ApiTools\Documentation\View\AgTransformDescription` (a.k.a `agTransformDescription`) for transforming the written 
   descriptions into Markdown.
 
 ### Factories
 
-#### ZF\Apigility\Documentation\ApiFactory
+#### Laminas\ApiTools\Documentation\ApiFactory
 
 The `ApiFactory` service is capable of producing an object-graph representation of the desired
 API documentation that is requested.  This object-graph will be composed of the following types:
 
-- `ZF\Apigility\Documentation\Api`: the root node of an API.
-- `ZF\Apigility\Documentation\Services`: an array of services in the API (a service can be one
+- `Laminas\ApiTools\Documentation\Api`: the root node of an API.
+- `Laminas\ApiTools\Documentation\Services`: an array of services in the API (a service can be one
   of a REST or RPC style service).
-- `ZF\Apigility\Documentation\Operations`: an array of operations in the service.
-- `ZF\Apigility\Documentation\Fields`: an array of fields for a service.
+- `Laminas\ApiTools\Documentation\Operations`: an array of operations in the service.
+- `Laminas\ApiTools\Documentation\Fields`: an array of fields for a service.

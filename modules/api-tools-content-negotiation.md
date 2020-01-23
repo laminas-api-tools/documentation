@@ -1,7 +1,7 @@
-# ZF Content Negotiation
+# Laminas Content Negotiation
 ## Introduction
 
-`zf-content-negotiation` is a module for automating content negotiation tasks within a Zend
+`api-tools-content-negotiation` is a module for automating content negotiation tasks within a Laminas
 Framework application.
 
 The following features are provided
@@ -17,21 +17,21 @@ The following features are provided
 
 ## Requirements
   
-Please see the [composer.json](https://github.com/zfcampus/zf-content-negotiation/tree/master/composer.json) file.
+Please see the [composer.json](https://github.com/laminas-api-tools/api-tools-content-negotiation/tree/master/composer.json) file.
  
 ## Installation
 
 Run the following `composer` command:
 
 ```console
-$ composer require zfcampus/zf-content-negotiation
+$ composer require laminas-api-tools/api-tools-content-negotiation
 ```
 
 Alternately, manually add the following to your `composer.json`, in the `require` section:
 
 ```javascript
 "require": {
-    "zfcampus/zf-content-negotiation": "^1.2"
+    "laminas-api-tools/api-tools-content-negotiation": "^1.2"
 }
 ```
 
@@ -45,22 +45,22 @@ return [
     /* ... */
     'modules' => [
         /* ... */
-        'ZF\ContentNegotiation',
+        'Laminas\ApiTools\ContentNegotiation',
     ],
     /* ... */
 ];
 ```
 
-> ### zf-component-installer
+> ### laminas-component-installer
 >
-> If you use [zf-component-installer](https://github.com/zendframework/zf-component-installer),
-> that plugin will install zf-content-negotiation as a module for you.
+> If you use [laminas-component-installer](https://github.com/laminas/laminas-component-installer),
+> that plugin will install api-tools-content-negotiation as a module for you.
 
 ## Configuration
 
 ### User Configuration
 
-The top-level configuration key for user configuration of this module is `zf-content-negotiation`.
+The top-level configuration key for user configuration of this module is `api-tools-content-negotiation`.
 
 #### Key: `controllers`
 
@@ -82,7 +82,7 @@ Example:
 
     // Selector definition:
     'Application\Controller\HelloWorld2' => [
-        'ZF\ContentNegotiation\JsonModel' => [
+        'Laminas\ApiTools\ContentNegotiation\JsonModel' => [
             'application/json',
             'application/*+json',
         ],
@@ -101,7 +101,7 @@ Example:
 ```php
 'selectors' => [
     'Json' => [
-        'ZF\ContentNegotiation\JsonModel' => [
+        'Laminas\ApiTools\ContentNegotiation\JsonModel' => [
             'application/json',
             'application/*+json',
         ],
@@ -116,11 +116,11 @@ controller to return either JSON or HTML output:
 ```php
 'selectors' => [
     'HTML-Json' => [
-        'ZF\ContentNegotiation\JsonModel' => [
+        'Laminas\ApiTools\ContentNegotiation\JsonModel' => [
             'application/json',
             'application/*+json',
         ],
-        'ZF\ContentNegotiation\ViewModel' => [
+        'Laminas\ApiTools\ContentNegotiation\ViewModel' => [
             'text/html',            
         ],
     ],
@@ -231,7 +231,7 @@ function:
 ```php
 'filters' => [
     'aliases'   => [
-        'Zend\Filter\File\RenameUpload' => 'filerenameupload',
+        'Laminas\Filter\File\RenameUpload' => 'filerenameupload',
     ],
     'factories' => [
         'filerenameupload' => Factory\RenameUploadFilterFactory::class,
@@ -240,7 +240,7 @@ function:
 
 'validators' => [
     'aliases'   => [
-        'Zend\Validator\File\UploadFile' => 'fileuploadfile',
+        'Laminas\Validator\File\UploadFile' => 'fileuploadfile',
     ],
     'factories' => [
         'fileuploadfile' => Factory\UploadFileValidatorFactory::class,
@@ -279,38 +279,38 @@ function:
 ],
 ```
 
-## ZF Events
+## Laminas Events
 
 ### Listeners
 
-#### ZF\ContentNegotiation\AcceptListener
+#### Laminas\ApiTools\ContentNegotiation\AcceptListener
 
 This listener is attached to the `MvcEvent::EVENT_DISPATCH` event with priority `-10`.  It is
 responsible for performing the actual selection and casting of a controller's view model based on
 the content negotiation configuration.
 
-#### ZF\ContentNegotiation\ContentTypeListener
+#### Laminas\ApiTools\ContentNegotiation\ContentTypeListener
 
 This listener is attached to the `MvcEvent::EVENT_ROUTE` event with a priority of `-625`. It is
 responsible for examining the `Content-Type` header in order to determine how the content body
 should be deserialized. Values are then persisted inside of a `ParameterDataContainer` which is
-stored in the `ZFContentNegotiationParameterData` key of the `MvcEvent` object.
+stored in the `LaminasContentNegotiationParameterData` key of the `MvcEvent` object.
 
-#### ZF\ContentNegotiation\AcceptFilterListener
+#### Laminas\ApiTools\ContentNegotiation\AcceptFilterListener
 
 This listener is attached to the `MvcEvent::EVENT_ROUTE` event with a priority of `-625`. It is
 responsible for ensuring the controller selected by routing is configured to respond to the specific
 media type in the current request's `Accept` header.  If it cannot, it will short-circuit the MVC
 dispatch process by returning a `406 Cannot honor Accept type specified` response.
 
-#### ZF\ContentNegotiation\ContentTypeFilterListener
+#### Laminas\ApiTools\ContentNegotiation\ContentTypeFilterListener
 
 This listener is attached to the `MvcEvent::EVENT_ROUTE` event with a priority of `-625`. It is
 responsible for ensuring the route matched controller can accept content in the request body
 specified by the media type in the current request's `Content-Type` header. If it cannot, it will
 short-circuit the MVC dispatch process by returning a `415 Invalid content-type specified` response.
 
-#### ZF\ContentNegotiation\HttpMethodOverrideListener
+#### Laminas\ApiTools\ContentNegotiation\HttpMethodOverrideListener
 
 - Since 1.3.0
 
@@ -321,17 +321,17 @@ header is present, and, if so, if it contains a value in the set allowed for the
 current HTTP request method invoked. If so, it resets the HTTP request method to
 the header value.
 
-## ZF Services
+## Laminas Services
 
 ### Controller Plugins
 
-#### ZF\ContentNegotiation\ControllerPlugin\RouteParam (a.k.a "routeParam")
+#### Laminas\ApiTools\ContentNegotiation\ControllerPlugin\RouteParam (a.k.a "routeParam")
 
-A controller plugin (`Zend\Mvc\Controller\AbstractActionController` callable) that will return a
+A controller plugin (`Laminas\Mvc\Controller\AbstractActionController` callable) that will return a
 single parameter with a particular name from the route match.
 
 ```php
-use Zend\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\Controller\AbstractActionController;
 
 class IndexController extends AbstractActionController
 {
@@ -342,13 +342,13 @@ class IndexController extends AbstractActionController
 }
 ```
 
-#### ZF\ContentNegotiation\ControllerPlugin\QueryParam (a.k.a "queryParam")
+#### Laminas\ApiTools\ContentNegotiation\ControllerPlugin\QueryParam (a.k.a "queryParam")
 
-A controller plugin (`Zend\Mvc\Controller\AbstractActionController` callable) that will return a
+A controller plugin (`Laminas\Mvc\Controller\AbstractActionController` callable) that will return a
 single parameter from the current request query string.
 
 ```php
-use Zend\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\Controller\AbstractActionController;
 
 class IndexController extends AbstractActionController
 {
@@ -359,14 +359,14 @@ class IndexController extends AbstractActionController
 }
 ```
 
-#### ZF\ContentNegotiation\ControllerPlugin\BodyParam (a.k.a "bodyParam")
+#### Laminas\ApiTools\ContentNegotiation\ControllerPlugin\BodyParam (a.k.a "bodyParam")
 
-A controller plugin (`Zend\Mvc\Controller\AbstractActionController` callable) that will return a
+A controller plugin (`Laminas\Mvc\Controller\AbstractActionController` callable) that will return a
 single parameter from the content-negotiated content body.
 
 
 ```php
-use Zend\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\Controller\AbstractActionController;
 
 class IndexController extends AbstractActionController
 {
@@ -377,13 +377,13 @@ class IndexController extends AbstractActionController
 }
 ```
 
-#### ZF\ContentNegotiation\ControllerPlugin\RouteParams (a.k.a "routeParams")
+#### Laminas\ApiTools\ContentNegotiation\ControllerPlugin\RouteParams (a.k.a "routeParams")
 
-A controller plugin (`Zend\Mvc\Controller\AbstractActionController` callable) that will return a
+A controller plugin (`Laminas\Mvc\Controller\AbstractActionController` callable) that will return a
 all the route parameters.
 
 ```php
-use Zend\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\Controller\AbstractActionController;
 
 class IndexController extends AbstractActionController
 {
@@ -394,13 +394,13 @@ class IndexController extends AbstractActionController
 }
 ```
 
-#### ZF\ContentNegotiation\ControllerPlugin\QueryParams (a.k.a "queryParams")
+#### Laminas\ApiTools\ContentNegotiation\ControllerPlugin\QueryParams (a.k.a "queryParams")
 
-A controller plugin (`Zend\Mvc\Controller\AbstractActionController` callable) that will return a
+A controller plugin (`Laminas\Mvc\Controller\AbstractActionController` callable) that will return a
 all the query parameters.
 
 ```php
-use Zend\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\Controller\AbstractActionController;
 
 class IndexController extends AbstractActionController
 {
@@ -411,13 +411,13 @@ class IndexController extends AbstractActionController
 }
 ```
 
-#### ZF\ContentNegotiation\ControllerPlugin\BodyParams (a.k.a "bodyParams")
+#### Laminas\ApiTools\ContentNegotiation\ControllerPlugin\BodyParams (a.k.a "bodyParams")
 
-A controller plugin (`Zend\Mvc\Controller\AbstractActionController` callable) that will return a
+A controller plugin (`Laminas\Mvc\Controller\AbstractActionController` callable) that will return a
 all the content-negotiated body parameters.
 
 ```php
-use Zend\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\Controller\AbstractActionController;
 
 class IndexController extends AbstractActionController
 {
