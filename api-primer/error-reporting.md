@@ -8,9 +8,9 @@ REST advocates indicate that HTTP response status codes should be used, but litt
 standardize on the response format.
 
 For JSON APIs, though, two formats are starting to achieve large adoption:
-`application/vnd.error+json` and `application/problem+json`. Apigility provides
+`application/vnd.error+json` and `application/problem+json`. Laminas API Tools provides
 support for the latter, which goes by the cumbersome title of [Problem Details for HTTP
-APIs](https://tools.ietf.org/html/rfc7807); Apigility refers to it as
+APIs](https://tools.ietf.org/html/rfc7807); API Tools refers to it as
 `API Problem` and provides support for it via the
 [zf-api-problem](https://github.com/zfcampus/zf-api-problem) module.
 
@@ -18,19 +18,19 @@ API Problem
 -----------
 
 API Problem goes by the mediatype `application/problem+json`; interestingly, there is also an XML
-variant, though Apigility does not provide support for it at this time.
+variant, though API Tools does not provide support for it at this time.
 
 The payload of an API Problem has the following structure:
 
 - **type**: a URL to a document describing the error condition (optional, and "about:blank" is
-  assumed if none is provided; should resolve to a _human-readable_ document; Apigility always
+  assumed if none is provided; should resolve to a _human-readable_ document; API Tools always
   provides this).
 - **title**: a brief title for the error condition (required; and should be the same for every
-  problem of the same **type**; Apigility always provides this).
-- **status**: the HTTP status code for the current request (optional; Apigility always provides this).
-- **detail**: error details specific to this request (optional; Apigility requires it for each
+  problem of the same **type**; API Tools always provides this).
+- **status**: the HTTP status code for the current request (optional; API Tools always provides this).
+- **detail**: error details specific to this request (optional; API Tools requires it for each
   problem).
-- **instance**: URI identifying the specific instance of this problem (optional; Apigility currently
+- **instance**: URI identifying the specific instance of this problem (optional; API Toolscurrently
   does not provide this).
 
 As an example payload:
@@ -49,19 +49,19 @@ Content-Type: application/problem+json
 
 You are not limited to the variables listed above! The API Problem specification allows you to
 compose any other additional fields that you feel would help further clarify the problem and why it
-occurred. Apigility uses this fact to provide more information in several ways:
+occurred. API Tools uses this fact to provide more information in several ways:
 
 - Validation error messages are reported via a `validation_messages` key.
 - When the `display_exceptions` view configuration setting is enabled, stack traces are included via
   `trace` and `exception_stack` properties.
 
 As an example, let's say a user hits an API service that requires authentication, but has not
-provided credentials (pretend for a moment that Apigility does not provide authentication and
+provided credentials (pretend for a moment that API Tools does not provide authentication and
 authorization). You could provide the URI to the end-user via the API Problem:
 
 ```JSON
 {
-    "type": "/apigility/documentation/Status-v2#oauth",
+    "type": "/api-tools/documentation/Status-v2#oauth",
     "detail": "Service requires authenticated user",
     "status": 403,
     "title": "Unauthorized",
@@ -75,22 +75,22 @@ should go to authenticate before trying the URI again.
 Sending an API Problem Response
 -------------------------------
 
-Apigility is built on top of [Zend Framework 2](http://framework.zend.com/), which means that it
-inherits ZF2's MVC. As such, in the code you write, you can typically return a
-`Zend\Http\Response` object in order to halt execution and finish the request/response lifecycle.
+API Tools is built on top of [Laminas MVC](https://docs.laminas.dev/mvc/), which means that it
+inherits its MVC. As such, in the code you write, you can typically return a
+`Laminas\Http\Response` object in order to halt execution and finish the request/response lifecycle.
 
-If you want to return an API Problem, Apigility offers a specialized response object you can use:
-the `ZF\ApiProblem\ApiProblemResponse` from [zf-api-problem](https://github.com/zfcampus/zf-api-problem).
-This requires passing a `ZF\ApiProblem\ApiProblem` object to the constructor. You can create both at
+If you want to return an API Problem, API Tools offers a specialized response object you can use:
+the `Laminas\ApiTools\ApiProblem\ApiProblemResponse` from [api-tools-api-problem](https://github.com/laminas-api-tools/api-tools-api-problem).
+This requires passing a `Laminas\ApiTools\ApiProblem\ApiProblem` object to the constructor. You can create both at
 the same time, and immediately return them:
 
 ```php
-return new \ZF\ApiProblem\ApiProblemResponse(
-    new \ZF\ApiProblem\ApiProblem(400, 'The request you made was malformed')
+return new \Laminas\ApiTools\ApiProblem\ApiProblemResponse(
+    new \Laminas\ApiTools\ApiProblem\ApiProblem(400, 'The request you made was malformed')
 );
 ```
 
-Apigility will use the status code you provide to the `ApiProblem` instance (the first argument in
+API Tools will use the status code you provide to the `ApiProblem` instance (the first argument in
 the example above) as the HTTP response status, and then serialize the instance to provide the
 problem details payload.
 
@@ -107,14 +107,14 @@ Problem:
 This is perhaps the easiest and most portable way to short-circuit execution and return a problem
 response.
 
-`zf-api-problem` also provides a specialized exception interface,
-`ZF\ApiProblem\Exception\ProblemExceptionInterface`, which, when implemented and used, allows you to
+`api-tools-api-problem` also provides a specialized exception interface,
+`Laminas\ApiTools\ApiProblem\Exception\ProblemExceptionInterface`, which, when implemented and used, allows you to
 specify the API Problem type, title, and additional properties to compose. As an example,
-`ZF\ApiProblem\Exception\DomainException` is an implementation, which you could use to customize the
+`Laminas\ApiTools\ApiProblem\Exception\DomainException` is an implementation, which you could use to customize the
 problem detail prior to throwing the exception:
 
 ```php
-$ex = new \ZF\ApiProblem\Exception\DomainException('The request you made was malformed', 400);
+$ex = new \Laminas\ApiTools\ApiProblem\Exception\DomainException('The request you made was malformed', 400);
 $ex->setType('/documentation/problems/malformed-request');
 $ex->setTitle('Malformed Request');
 $ex->setAdditionalDetails([
@@ -146,5 +146,5 @@ custom error types, so long as you have a description of them to link to. You ca
 or as much detail as you want, and even decide what information to expose based on environment
 (e.g., production vs development).
 
-Apigility will use the Problem Details format whenever a request matching a JSON mediatype is made
+API Tools will use the Problem Details format whenever a request matching a JSON mediatype is made
 and an error occurs.
