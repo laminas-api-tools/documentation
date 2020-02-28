@@ -35,7 +35,7 @@ effectively two listeners that deal with authentication related workflows:
   credentials were provided) to the `MvcAuthEvent`.
 
 - `Laminas\ApiTools\MvcAuth\Authentication\DefaultPostAuthenticationListener` is registered to listen to the event
-  `Laminas\ApiTools\MvcAuth\MvcAuthEvent::EVENT_AUTHENTICATION_POST`.  This listener is responsible for 
+  `Laminas\ApiTools\MvcAuth\MvcAuthEvent::EVENT_AUTHENTICATION_POST`.  This listener is responsible for
   determining if some identity was presented by the client, and if it was successfully
   authenticated. If it was not, this listener will inject a `401 Unauthorized` status code to the
   current HTTP response object and return it, ending the request.
@@ -48,7 +48,7 @@ effectively two listeners that deal with authentication related workflows:
 (The first column are event constants from `Laminas\ApiTools\MvcAuth\MvcAuthEvent`; the second are event constants
 from `Laminas\Mvc\MvcEvent`.)
 
-As you can tell from their `EVENT_ROUTE` priorities, authorization happens *after* routing.  There 
+As you can tell from their `EVENT_ROUTE` priorities, authorization happens *after* routing.  There
 are effectively three listeners that deal with authorization related workflows:
 
 - `Laminas\ApiTools\MvcAuth\Authorization\DefaultResourceResolverListener` is registered with the event
@@ -64,8 +64,8 @@ are effectively three listeners that deal with authorization related workflows:
 
 - `Laminas\ApiTools\MvcAuth\Authorization\DefaultAuthorizationPostListener` is registered with the
   `Laminas\ApiTools\MvcAuth\MvcAuthEvent::EVENT_AUTHORIZATION_POST` event, at default priority.  This listener is
-  responsible for checking if the current request is unauthorized, and if so, it will assign a 
-  `403 Unauthorized` status to the HTTP response object, and return it.
+  responsible for checking if the current request is unauthorized, and if so, it will assign a
+  `401 Unauthorized` status to the HTTP response object, and return it.
 
 ## Services & Models
 
