@@ -63,7 +63,7 @@ authorization). You could provide the URI to the end-user via the API Problem:
 {
     "type": "/api-tools/documentation/Status-v2#oauth",
     "detail": "Service requires authenticated user",
-    "status": 403,
+    "status": 401,
     "title": "Unauthorized",
     "authentication_uri": "/oauth"
 }
