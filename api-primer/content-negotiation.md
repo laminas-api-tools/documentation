@@ -102,13 +102,13 @@ specification. Similarly, the server needs to be programmed such that it returns
 response status codes when unable to provide particular representations, or unable to deserialize
 incoming data. These are not trivial concerns.
 
-Apigility handles each of these tasks. Additionally, it does them quite early in the request cycle,
+API Tools handles each of these tasks. Additionally, it does them quite early in the request cycle,
 so that if the application cannot handle the request, a response is returned as early as possible;
 this allows your server to save important processing cycles for the requests that really matter --
 those it can handle!
 
 Content negotiation is configuration driven and handled by the
-[zf-content-negotiation](https://github.com/zfcampus/zf-content-negotiation) module. Each controller
+[api-tools-content-negotiation](https://github.com/laminas-api-tools/api-tools-content-negotiation) module. Each controller
 service can indicate what `Accept` media types it can handle, what `Content-Type` media types it can
 deserialize, and specify a map of `Accept` media types to the view models, and hence view renderers,
 that will handle creating a representation. You can read more about these subjects in the [content

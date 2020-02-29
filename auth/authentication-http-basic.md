@@ -11,7 +11,7 @@ The first thing to do, before anything else, is to create an `htpasswd` file tha
 one username and password.
 
 > It is important that the `htpasswd` file exists before configuration, as having a path to a
-> non-existent file in the configuration could break the Apigility installation.
+> non-existent file in the configuration could break the API Tools installation.
 
 A good place to store this file would be in `data/users.htpasswd`.
 
@@ -27,7 +27,7 @@ Once the file has been created, its path can be used to configure the required `
 of the HTTP Basic authentication configuration adapter. Go to the "Authentication" page, and click
 the "New adapter" button, you will see something like that:
 
-![Create an HTTP Basic authentication adapter](/asset/apigility-documentation/img/auth-authentication-http-basic-ui-settings.jpg)
+![Create an HTTP Basic authentication adapter](/asset/api-tools-documentation/img/auth-authentication-http-basic-ui-settings.jpg)
 
 You need to specify an authentication adapter name, select the HTTP Basic type, provide a realm value
 and the path of the `htpasswd` file.
@@ -43,11 +43,11 @@ of identities with HTTP Basic is possible.
 ```php
 // config/autoload/local.php
 return [
-    'zf-mvc-auth' => [
+    'api-tools-mvc-auth' => [
         'authentication' => [
             'adapters' => [
                 'basic' => [
-                    'adapter' => 'ZF\\MvcAuth\\Authentication\\HttpAdapter',
+                    'adapter' => 'Laminas\\ApiTools\\MvcAuth\\Authentication\\HttpAdapter',
                     'options' => [
                         'accept_schemes' => [
                             0 => 'basic',
@@ -114,5 +114,5 @@ Important Notes
 - Your client should be capable of properly encoding the HTTP Basic `Authorization` header.
 - In production, ensure an `htpasswd` file can be utilized in the same relative location as in
   development, even if the `htpasswd` was not checked into your VCS.
-- Omitting the `Authorization` header implies that the "guest" `ZF\MvcAuth\Identity\GuestIdentity`
+- Omitting the `Authorization` header implies that the "guest" `Laminas\ApiTools\MvcAuth\Identity\GuestIdentity`
   identity will be used.

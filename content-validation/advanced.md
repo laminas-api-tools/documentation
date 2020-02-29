@@ -6,7 +6,7 @@ Custom input filters
 
 Content forthcoming. Topics:
 
-- Registering custom input filters with `zf-content-validation`.
+- Registering custom input filters with `api-tools-content-validation`.
 - Registering custom filters and validators.
 - Providing metadata for custom filters and validators so that they will display in the admin UI.
 
@@ -14,10 +14,10 @@ Method-specific input filters
 -----------------------------
 
 Your service may require different input filters based on the HTTP method called. As an example from
-the Apigility Admin API, creating a service (`POST` request) only requires a field or two; updating
+the API Tools Admin API, creating a service (`POST` request) only requires a field or two; updating
 a service (`PATCH` and/or `PUT` request), however, may require dozens of fields.
 
-`zf-content-validation` provides:
+`api-tools-content-validation` provides:
 
 - The ability to define a "fallback" input filter for a service, to be used for any HTTP request
   method that does not have a specific input filter defined.
@@ -25,11 +25,11 @@ a service (`PATCH` and/or `PUT` request), however, may require dozens of fields.
 
 The latter capability is only provided via manual configuration at this time.
 
-`zf-content-validation` configuration has the following structure:
+`api-tools-content-validation` configuration has the following structure:
 
 ```php
 [
-    'zf-content-validation' => [
+    'api-tools-content-validation' => [
         'Controller Service Name' => [
             'input_filter' => 'input filter service to use if no method specific filter available',
             'PATCH' => 'input filter service for PATCH requests',
@@ -42,11 +42,11 @@ The latter capability is only provided via manual configuration at this time.
 ```
 
 The values for each key must be a valid input filter as defined either in the `input_filter_specs`
-configuration (which is what the Apigility Admin UI manipulates), or a valid input filter service
+configuration (which is what the API Tools Admin UI manipulates), or a valid input filter service
 registered with the `input_filters` configuration (or within the `getInputFilterConfig()` method of
 a Zend Framework module).
 
-Since version 1.5.0 of zf-content-validation, when a `GET` request is made, the
+Since version 1.5.0 of api-tools-content-validation, when a `GET` request is made, the
 input filter element keys are used as a query whitelist, and merged with those
 in the admin UI if any exist.
 
@@ -56,7 +56,7 @@ filter separately:
 
 ```php
 [
-    'zf-content-validation' => [
+    'api-tools-content-validation' => [
         'AddressBook\V1\Rest\Contact\Controller' => [
             'input_filter' => 'AddressBook\V1\Rest\Contact\Validator',
             'POST' => 'AddressBook\V1\Rest\Contact\NewContactValidator',

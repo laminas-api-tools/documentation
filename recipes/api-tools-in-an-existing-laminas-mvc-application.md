@@ -1,24 +1,24 @@
-Adding Apigility to an Existing Project
+Adding API Tools to an Existing Project
 =======================================
 
-Because Apigility's functionality is provided by a number of Zend Framework 2 modules, you can add
-Apigility to an existing ZF2 application by adding its modules to the application.
+Because API Tools' functionality is provided by a number of Laminas MVC modules, you can add
+API Tools to an existing Laminas application by adding its modules to the application.
 
-You may skip this step, but for the purposes of the examples in this tutorial, we'll be using a ZF2
-application based on [StatusLib](https://github.com/zfcampus/statuslib-example) (which was used in
-the [REST Service tutorial](/intro/first-rest-service.md).  To get a working ZF2 application like
-it, please follow the directions in the [StatusLib README](https://github.com/zfcampus/statuslib-example#statuslib-in-a-new-zf2-project).
+You may skip this step, but for the purposes of the examples in this tutorial, we'll be using a Laminas
+application based on [StatusLib](https://github.com/laminas-api-tools/statuslib-example) (which was used in
+the [REST Service tutorial](/intro/first-rest-service.md).  To get a working Laminas MVC application like
+it, please follow the directions in the [StatusLib README](https://github.com/laminas-api-tools/statuslib-example#statuslib-in-a-new-zf2-project).
 
-Preparing a ZF2-based application
----------------------------------
+Preparing a Laminas MVC application
+-----------------------------------
 
-Now that you have an existing ZF2 application you wish to add Apigility to, it is time to add the
+Now that you have an existing Laminas MVC application you wish to add API Tools to, it is time to add the
 dependencies.
 
 ```console
-$ composer require "zfcampus/zf-apigility:~1.0"
-$ composer require --dev "zfcampus/zf-apigility-admin:~1.0"
-$ composer require --dev "zfcampus/zf-development-mode:~2.0"
+$ composer require "laminas-api-tools/api-tools:~1.0"
+$ composer require --dev "laminas-api-tools/api-tools-admin:~1.0"
+$ composer require --dev "laminas/laminas-development-mode:~2.0"
 ```
 
 Now, to ensure that the development-time tools are accessible and cannot be accidentially deployed
@@ -27,7 +27,7 @@ Replace:
 
 ```php
 // Run the application!
-Zend\Mvc\Application::init(require 'config/application.config.php')->run();
+Laminas\Mvc\Application::init(require 'config/application.config.php')->run();
 ```
 
 with:
@@ -40,11 +40,11 @@ if (!defined('APPLICATION_PATH')) {
 $appConfig = include APPLICATION_PATH . '/config/application.config.php';
 
 if (file_exists(APPLICATION_PATH . '/config/development.config.php')) {
-    $appConfig = Zend\Stdlib\ArrayUtils::merge($appConfig, include APPLICATION_PATH . '/config/development.config.php');
+    $appConfig = Laminas\Stdlib\ArrayUtils::merge($appConfig, include APPLICATION_PATH . '/config/development.config.php');
 }
 
 // Run the application!
-Zend\Mvc\Application::init($appConfig)->run();
+Laminas\Mvc\Application::init($appConfig)->run();
 ```
 
 Now, enable the necessary production modules by editing your `config/application.config.php`
@@ -53,25 +53,25 @@ Now, enable the necessary production modules by editing your `config/application
     /* ... */
     'modules' => [
         'Application',
-        'ZF\Apigility',
-        'ZF\Apigility\Provider',
+        'Laminas\ApiTools',
+        'Laminas\ApiTools\Provider',
         'AssetManager',
-        'ZF\ApiProblem',
-        'ZF\MvcAuth',
-        'ZF\OAuth2',
-        'ZF\Hal',
-        'ZF\ContentNegotiation',
-        'ZF\ContentValidation',
-        'ZF\Rest',
-        'ZF\Rpc',
-        'ZF\Versioning',
-        'ZF\DevelopmentMode',
+        'Laminas\ApiTools\ApiProblem',
+        'Laminas\ApiTools\MvcAuth',
+        'Laminas\ApiTools\OAuth2',
+        'Laminas\ApiTools\Hal',
+        'Laminas\ApiTools\ContentNegotiation',
+        'Laminas\ApiTools\ContentValidation',
+        'Laminas\ApiTools\Rest',
+        'Laminas\ApiTools\Rpc',
+        'Laminas\ApiTools\Versioning',
+        'Laminas\DevelopmentMode',
         // any other modules you have...
     ],
     /* ... */
 ```
 
-You'll notice the `ZF\DevelopmentMode` module is included in `config/application.config.php`, which
+You'll notice the `Laminas\DevelopmentMode` module is included in `config/application.config.php`, which
 we would intend is available when this application is deployed to production.  This is fine since
 this particular module is responsible for only adding commands to the application to provide the
 ability to switch development mode off and on on your development machine.
@@ -89,8 +89,8 @@ content:
 return [
     // Development time modules
     'modules' => [
-        'ZF\Apigility\Admin',
-        'ZF\Configuration',
+        'Laminas\ApiTools\Admin',
+        'Laminas\ApiTools\Configuration',
     ],
     // development time configuration globbing
     'module_listener_options' => [
@@ -99,7 +99,7 @@ return [
 ];
 ```
 
-The above file is a template file used by `ZF\DevelopmentMode`; when you call 
+The above file is a template file used by `Laminas\DevelopmentMode`; when you call 
 `php public/index.php development enable` from the command line, the module copies this file to
 `config/development.config.php`, and your `public/index.php` now sees the file and merges it with
 what `config/application.config.php` returns -- giving you your "development mode" settings.
@@ -120,29 +120,30 @@ data/cache/*
 !data/cache/.gitkeep
 ```
 
-At this point, all the various peices that you would expect to find in the Apigility skeleton
-application have been ported into your existing ZF2 application.  Finally, issue the following
-command, just like you would in Apigility:
+At this point, all the various peices that you would expect to find in the API Tools skeleton
+application have been ported into your existing Laminas MVC application.  Finally, issue the following
+command, just like you would in API Tools:
 
 ```console
 $ php public/index.php development enable
 ```
 
-Once complete, this particular ZF2 project can be accessed like any other Apigility project.
+Once complete, this particular Laminas MVC project can be accessed like any
+other API Tools project.
 
-Building Apigility API modules
+Building API Tools API modules
 ------------------------------
 
-At this point there are effectively two ways of building out Apigility modules:
+At this point there are effectively two ways of building out API Tools modules:
 
 - New API modules that consume existing module's models.
 - Creating services inside an existing module.
 
 There are a couple of important notes to remember:
 
-- Apigility does not modify code inside the `vendor` directory.  This means your modules need to
-  exist in the ZF2 `module` directory.
-- Apigility will create a specific directory structure inside the module's source code:
+- API Tools does not modify code inside the `vendor` directory.  This means your modules need to
+  exist in the `module` directory.
+- API Tools will create a specific directory structure inside the module's source code:
   - When services are created, they will be created as [PSR-0](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md)
     compatible classes in the specified module source directory.
   - The naming and namespace pattern for these classes will be 
@@ -152,30 +153,30 @@ Choosing to go the route of having separate API modules will ensure a higher lev
 concerns between modules. The unfortunate downside to this is that there will be more modules, and
 thus a higher chance of naming collisions.
 
-### Apigility-enabling existing modules
+### API Tools-enabling existing modules
 
-In order to enable an existing module as an Apigility module, ensure the module is in the `module`
+In order to enable an existing module as an API Tools module, ensure the module is in the `module`
 directory; then perform one of the following.
 
 #### Manually enabling a module
 
-Edit the module class by hand to implement the `ApigilityProviderInterface` (which is a [marker
+Edit the module class by hand to implement the `ApiToolsProviderInterface` (which is a [marker
 interface](http://en.wikipedia.org/wiki/Marker_interface_pattern)).
 
 Using `StatusLib` as an example, we would edit `module/StatusLib/Module.php`:
 
 ```php
 /* ... */
-use ZF\Apigility\Provider\ApigilityProviderInterface;
+use Laminas\ApiTools\Provider\ApiToolsProviderInterface;
 
-class Module implements ApigilityProviderInterface
+class Module implements ApiToolsProviderInterface
 {
     /* ... */
 ```
 
-#### Using the Apigility Admin API
+#### Using the API Tools Admin API
 
-You can also use the Apigility Admin API to Apigility-enable the module.
+You can also use the API Tools Admin API to API Tools-enable the module.
 
 To do this, you will need a web server running your application; this can be the built-in PHP web
 server, as detailed in the [installation guide](/intro/installation.md#all-methods):
@@ -184,11 +185,11 @@ server, as detailed in the [installation guide](/intro/installation.md#all-metho
 php -S 0.0.0.0:8888 -ddisplay_errors=0 -t public public/index.php
 ```
 
-Once running, initiate a `PUT` request to the `/apigility/api/module.enable` path, providing the
+Once running, initiate a `PUT` request to the `/api-tools/api/module.enable` path, providing the
 module name as the `module` variable of the payload:
 
 ```HTTP
-PUT /apigility/api/module.enable HTTP/1.1
+PUT /api-tools/api/module.enable HTTP/1.1
 Accept: application/json
 Content-Type: application/json
 

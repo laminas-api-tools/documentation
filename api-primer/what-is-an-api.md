@@ -260,13 +260,13 @@ choices you make for another.
 In a nutshell, most REST provides incredible flexibility and power, but requires you to make many
 choices in order to provide a solid, quality experience for consumers.
 
-API Types in Apigility
+API Types in API Tools
 ----------------------
 
-### RPC in Apigility
+### RPC in API Tools
 
-Despite the problems listed in the [RPC section](#rpc), Apigility provides RPC services. However,
-RPC services in Apigility display slightly different characteristics:
+Despite the problems listed in the [RPC section](#rpc), API Tools provides RPC services. However,
+RPC services in API Tools display slightly different characteristics:
 
 - A single service endpoint can react to multiple HTTP methods. Requests using methods outside those
   configured result in a `405 Method Not Allowed` status; `OPTIONS` requests will detail which
@@ -281,9 +281,9 @@ We see RPC as a bucket for one-off operations, or operations that are more "acti
 Like REST, we allow RPC services to provide multiple representations if desired, though we default
 to vanilla JSON. (You can even perform hypermedia linking if desired!)
 
-### REST in Apigility
+### REST in API Tools
 
-In Apigility, we make the following choices for REST services:
+In API Tools, we make the following choices for REST services:
 
 - REST URIs provide access to both "collections" and individually addressable "entities" from those
   collections. Each type can specify HTTP request methods allowed; requests using methods outside

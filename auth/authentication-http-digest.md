@@ -21,10 +21,10 @@ $
 Once the file has been created, its path can be used to configure the required `htdigest` file input
 of the HTTP Digest authentication configuration screen, shown here:
 
-![Configuring HTTP Digest settings](/asset/apigility-documentation/img/auth-authentication-http-digest-ui-settings.jpg)
+![Configuring HTTP Digest settings](/asset/api-tools-documentation/img/auth-authentication-http-digest-ui-settings.jpg)
 
 The configuration data will be stored in `config/autoload/local.php` under the key
-`['zf-mvc-auth']['authentication']['adapters']['digest']` where `digest` is the name of the adapter chosen
+`['api-tools-mvc-auth']['authentication']['adapters']['digest']` where `digest` is the name of the adapter chosen
 in the previous screenshot. You can have many authentication adapters in your configuration file,
 and choose the one to be used for your API. Below is an example of config with two authentication adapters
 (HTTP Basic and Digest).
@@ -32,11 +32,11 @@ and choose the one to be used for your API. Below is an example of config with t
 ```php
 // config/autoload/local.php
 return [
-    'zf-mvc-auth' => [
+    'api-tools-mvc-auth' => [
         'authentication' => [
             'adapters' => [
                 'basic' => [
-                    'adapter' => 'ZF\\MvcAuth\\Authentication\\HttpAdapter',
+                    'adapter' => 'Laminas\\ApiTools\\MvcAuth\\Authentication\\HttpAdapter',
                     'options' => [
                         'accept_schemes' => [
                             0 => 'basic',
@@ -46,7 +46,7 @@ return [
                     ],
                 ],
                 'digest' => [
-                    'adapter' => 'ZF\\MvcAuth\\Authentication\\HttpAdapter',
+                    'adapter' => 'Laminas\\ApiTools\\MvcAuth\\Authentication\\HttpAdapter',
                     'options' => [
                         'accept_schemes' => [
                             0 => 'digest',
@@ -112,5 +112,5 @@ Important Notes
   able to fulfill the digest handshake.
 - In production, ensure an `htdigest` file can be utilized in the same relative location as in
   development, even if the `htdigest` was not checked into your VCS.
-- No `Authorization` header in the request implies that the "guest" `ZF\MvcAuth\Identity\GuestIdentity`
+- No `Authorization` header in the request implies that the "guest" `Laminas\ApiTools\MvcAuth\Identity\GuestIdentity`
   identity will be used.

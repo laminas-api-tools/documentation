@@ -1,39 +1,13 @@
 Installation
 ============
 
-## From the terminal
-
-The easiest way to install `Apigility` is from your terminal, executing the following command:
-
-```console
-$ curl -sS https://apigility.org/install | php
-```
-
-If you do not have [curl](http://curl.haxx.se/) installed you can use PHP itself:
-
-```console
-$ php -r "readfile('https://apigility.org/install');" | php
-```
-
-Otherwise you can install `Apigility` using one of the alternative following procedures.
-
-## Via release tarball
-
-Grab the latest release from the Apigility [download](https://apigility.org/download) page.
-
-Untar it:
-
-```console
-$ tar xzf zf-apigility-skeleton-1.0.0beta1.tgz
-```
-
 ## Via Composer (create-project)
 
 You can use the `create-project` command from [Composer](http://getcomposer.org/)
 to create the project in one go:
 
 ```console
-$ composer create-project zfcampus/zf-apigility-skeleton path/to/install
+$ composer create-project laminas-api-tools/api-tools-skeleton path/to/install
 ```
 
 ## Via Git (clone)
@@ -41,7 +15,7 @@ $ composer create-project zfcampus/zf-apigility-skeleton path/to/install
 First, clone the repository:
 
 ```console
-$ git clone https://github.com/zfcampus/zf-apigility-skeleton.git # optionally, specify the directory in which to clone
+$ git clone https://github.com/laminas-api-tools/api-tools-skeleton.git # optionally, specify the directory in which to clone
 $ cd path/to/install
 ```
 
@@ -100,7 +74,7 @@ inspect your APIs.
 > **Disable all opcode caches when running the admin!**
 > 
 > The admin cannot and will not run correctly when an opcode cache, such as APC or
-> OpCache, is enabled. Apigility does not use a database to store configuration;
+> OpCache, is enabled. API Tools does not use a database to store configuration;
 > instead, it uses PHP configuration files. Opcode caches will cache these files
 > on first load, leading to inconsistencies as you write to them, and will
 > typically lead to a state where the admin API and code become unusable.
@@ -121,7 +95,7 @@ inspect your APIs.
 > text, or, with extensions like XDebug, in HTML. This breaks the response payload, making it unusable
 > by clients.
 > 
-> For this reason, we recommend disabling `display_errors` when using the Apigility admin interface.
+> For this reason, we recommend disabling `display_errors` when using the API Tools admin interface.
 > This can be done using the `-ddisplay_errors=0` flag when using the built-in PHP web server, or you
 > can set it in your virtual host or server definition. If you disable it, make sure you have
 > reasonable error log settings in place. For the built-in PHP web server, errors will be reported in

@@ -23,7 +23,7 @@ XML provides two very simple ways to provide relational links:
 
   Note that you need to add the relevant XML namespace to the document in order to use XLink.
 
-JSON does not provide hypermedia linking by default, which left the Apigility project with a
+JSON does not provide hypermedia linking by default, which left the Laminas API Tools project with a
 quandary: how should links be represented in JSON?
 
 Several emerging standards/projects attempt to answer this question. Among the most popular
@@ -41,7 +41,7 @@ solutions are:
   addition, you define the "entities" encapsulated in the payload, and any "actions" that may be
   performed. The aim is to be fully self-documenting.
 
-Ultimately, Apigility chose to use HAL, due to its simplicity. It manages to provide the hypermedia
+Ultimately, the project chose to use HAL, due to its simplicity. It manages to provide the hypermedia
 controls in a straight-forward way, and does not complicate the payload with additional details,
 or nest the important bits - the data - several layers deep. That said, any of the above formats
 would have posed an excellent choice.

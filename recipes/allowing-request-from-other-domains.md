@@ -4,19 +4,19 @@ Allowing requests from other domains
 Context
 -------
 
-You've built a fully-functional API with Apigility and hosted it on your domain, e.g.,
+You've built a fully-functional API with API Tools and hosted it on your domain, e.g.,
 https://mygreatapp.example.com/api.
- 
+
 Now let's assume you developed a widget in JavaScript that fetches data from your API, and you would
-like to use it in different websites, located on different domains. 
+like to use it in different websites, located on different domains.
 
 Every single request will fail. Why? How can you fix this?
 
 The problem
 -----------
 
-Making a request from one domain to a different domain is protected by the same-origin policy 
-([RFC 6454](http://tools.ietf.org/html/rfc6454)). 
+Making a request from one domain to a different domain is protected by the same-origin policy
+([RFC 6454](http://tools.ietf.org/html/rfc6454)).
 
 The policy is quite simple: this browser compares the combination of protocol/schema, host, and port
 from both the client and the server. If there's an **exact** match, it passes. If a single element
@@ -94,7 +94,8 @@ return [
 ### Configuration
 
 First copy the file `vendor/zfr/zfr-cors/config/zfr_cors.global.php.dist` to
-`config/autoload/zfr-cors.global.php`. *(Note the removal of the `.dist` extension.)
+`config/autoload/zfr-cors.global.php`. *(Note the removal of the `.dist`
+extension.)*
 
 To carry on with our example, let's adapt the ZfrCors module configuration file as follows:
 
@@ -141,13 +142,14 @@ return [
 ];
 ```
 
-> #### A couple of notes :
-> 
+> A couple of notes
+> -----------------
+>
 > - `allowed_methods` : we just allowed the `GET` and `OPTIONS` verbs. `GET` only permits "READ"
 >   operations. `OPTIONS` should always be kept in this array, as it's mandatory for certain
 >   browsers. If you want to allow other operations, make sure they are listed here.
 > - `allowed_headers` : we added `Authorization` for OAuth2 requests, for example. You may also want
 >   to add `Accept` and `Content-Type`.
-> 
+>
 > See the [ZfrCors](http://github.com/zf-fr/zfr-cors) GitHub page for further information and
 > configuration.

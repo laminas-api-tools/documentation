@@ -8,7 +8,7 @@ The primary goal of this recipe is to be able to use third-party identity
 providers (Facebook, Google, GitHub, etc.) to signup and login on our API.
 
 The implementation described supports **only** third-parties; the built-in oauth
-server from Apigility will not be used. That means users **must** use a social
+server from API Tools will not be used. That means users **must** use a social
 account.
 
 This implementation assumes the use of Doctrine (but **not** ZfcUser), but could
@@ -49,12 +49,12 @@ First, install [HybridAuth](https://github.com/hybridauth/hybridauth), which we'
 $ composer require  hybridauth/hybridauth:dev-3.0.0-Remake
 ```
 
-Next, create a new RPC service `HybridAuth` via the Apigility admin interface.
+Next, create a new RPC service `HybridAuth` via the API Tools admin interface.
 Since we will need two actions in the same controller (one for authentication
 request, another for the callback), we'll define the route with an `action`
 segment: `/hybridauth[/:action]`.
 
-![Create a new RPC service](/asset/apigility-documentation/img/recipes-social-login-rpc-service.png)
+![Create a new RPC service](/asset/api-tools-documentation/img/recipes-social-login-rpc-service.png)
 
 In `module/YourApi/src/V1/Rpc/HybridAuth/HybridAuthController.php`, we'll create
 two actions. The first one, `hybridAuthAction()`, will redirect to the provider;
@@ -71,7 +71,7 @@ use Application\Model\User;
 use Doctrine\ORM\EntityManager;
 use Hybridauth\Hybridauth;
 use OAuth2\Encryption\Jwt;
-use Zend\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\Controller\AbstractActionController;
 
 class HybridAuthController extends AbstractActionController
 {
@@ -201,7 +201,7 @@ class HybridAuthControllerFactory
 >
 > If you are using zend-servicemanager v2, you will need to change the above
 > factory slightly, as that version passes a
-> `Zend\Mvc\Controller\ControllerPluginManager` instance to the factory instead of
+> `Laminas\Mvc\Controller\ControllerPluginManager` instance to the factory instead of
 > the application service manager instance. In that case, change the argument to
 > the factory method to read `$controllers` instead of `$container`, and then add
 > the following line at the start of the method:
@@ -217,8 +217,8 @@ class HybridAuthControllerFactory
 > 
 > use Doctrine\ORM\EntityManager;
 > use Interop\Container\ContainerInterface;
-> use Zend\ServiceManager\FactoryInterface;
-> use Zend\ServiceManager\ServiceLocatorInterface;
+> use Laminas\ServiceManager\FactoryInterface;
+> use Laminas\ServiceManager\ServiceLocatorInterface;
 > 
 > class HybridAuthControllerFactory implements FactoryInterface
 > {
@@ -662,14 +662,14 @@ close itself.
 </html>
 ```
 
-At this point, we have a full login process usable by a real user, but Apigility
+At this point, we have a full login process usable by a real user, but API Tools
 does not know about it.
 
-Integration with Apigility authentication
+Integration with API Tools authentication
 -----------------------------------------
 
 Now that we have a fully working login process, the only thing left is to
-integrate with Apigility authentication. We will hook into authentication events
+integrate with API Tools authentication. We will hook into authentication events
 and inject our own identity implementation.
 
 First, we will create our custom `Identity` class, used to store our user for easier
@@ -681,7 +681,7 @@ access later on. Create this in `module/Application/src/Authentication/Authentic
 namespace Application\Authentication;
 
 use Application\Model\User;
-use ZF\MvcAuth\Identity\AuthenticatedIdentity as BaseIdentity;
+use Laminas\ApiTools\MvcAuth\Identity\AuthenticatedIdentity as BaseIdentity;
 
 class AuthenticatedIdentity extends BaseIdentity
 {
@@ -722,8 +722,8 @@ use Application\Model\User;
 use Application\Authentication\AuthenticatedIdentity;
 use Doctrine\ORM\EntityManager;
 use OAuth2\Encryption\Jwt;
-use ZF\MvcAuth\Identity\GuestIdentity;
-use ZF\MvcAuth\MvcAuthEvent;
+use Laminas\ApiTools\MvcAuth\Identity\GuestIdentity;
+use Laminas\ApiTools\MvcAuth\MvcAuthEvent;
 
 class Module
 {
@@ -776,7 +776,7 @@ class Module
 
     public function onAuthorization(MvcAuthEvent $e)
     {
-        /* @var $authorization \ZF\MvcAuth\Authorization\AclAuthorization */
+        /* @var $authorization \Laminas\ApiTools\MvcAuth\Authorization\AclAuthorization */
         $authorization = $e->getAuthorizationService();
         $identity = $e->getIdentity();
         $resource = $e->getResource();
@@ -789,7 +789,7 @@ class Module
 Conclusion
 ----------
 
-At this point, even though there is nothing selected in the Apigility
+At this point, even though there is nothing selected in the API Tools
 `Authentication` tab, we will be able to enable authorization for each
 service, and users will be able to login using the social authentication
 workflow of their choice.

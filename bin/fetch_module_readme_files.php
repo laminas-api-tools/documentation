@@ -7,34 +7,32 @@
  */
 
 $modules = array(
-    'api-tools',
-    'api-tools-admin',
-    'api-tools-documentation',
-    'api-tools-documentation-apiblueprint',
-    'api-tools-documentation-swagger',
-    'api-tools-doctrine',
-    'api-tools-provider',
-    'api-tools-welcome',
-    'api-tools-api-problem',
-    'api-tools-asset-manager',
-    'laminas-composer-autoloading',
-    'api-tools-configuration',
-    'zf-console',
-    'api-tools-content-negotiation',
-    'api-tools-content-validation',
-    'zf-deploy',
-    'laminas-development-mode',
-    'api-tools-doctrine-querybuilder',
-    'api-tools-hal',
-    'api-tools-http-cache',
-    'api-tools-mvc-auth',
-    'api-tools-oauth2',
-    'api-tools-rest',
-    'api-tools-rpc',
-    'api-tools-versioning',
+    'laminas-api-tools/api-tools',
+    'laminas-api-tools/api-tools-admin',
+    'laminas-api-tools/api-tools-documentation',
+    'laminas-api-tools/api-tools-documentation-apiblueprint',
+    'laminas-api-tools/api-tools-documentation-swagger',
+    'laminas-api-tools/api-tools-doctrine',
+    'laminas-api-tools/api-tools-provider',
+    'laminas-api-tools/api-tools-welcome',
+    'laminas-api-tools/api-tools-api-problem',
+    'laminas-api-tools/api-tools-asset-manager',
+    'laminas-api-tools/api-tools-configuration',
+    'laminas-api-tools/api-tools-content-negotiation',
+    'laminas-api-tools/api-tools-content-validation',
+    'laminas-api-tools/api-tools-doctrine-querybuilder',
+    'laminas-api-tools/api-tools-hal',
+    'laminas-api-tools/api-tools-http-cache',
+    'laminas-api-tools/api-tools-mvc-auth',
+    'laminas-api-tools/api-tools-oauth2',
+    'laminas-api-tools/api-tools-rest',
+    'laminas-api-tools/api-tools-rpc',
+    'laminas-api-tools/api-tools-versioning',
+    'zfcampus/zf-console',
+    'zfcampus/zf-deploy',
 );
 
-$uriTemplate  = 'https://raw.githubusercontent.com/laminas-api-tools/%s/master/README.md';
+$uriTemplate  = 'https://raw.githubusercontent.com/%s/master/README.md';
 $pathTemplate = realpath(__DIR__) . '/../modules/%s.md';
 $regexReplace = array(
     array('pattern' => '#\n\[\!\[build status\].*?\n#is',    'replacement' => ''),
@@ -48,12 +46,13 @@ $handles     = array();
 
 // Add handles for all modules
 foreach ($modules as $module) {
+    list($org, $repo) = explode('/', $module, 2);
     $uri              = sprintf($uriTemplate, $module);
-    $handles[$module] = curl_init($uri);
-    curl_setopt($handles[$module], CURLOPT_HEADER, 0);
-    curl_setopt($handles[$module], CURLOPT_RETURNTRANSFER, 1);
+    $handles[$repo]   = curl_init($uri);
+    curl_setopt($handles[$repo], CURLOPT_HEADER, 0);
+    curl_setopt($handles[$repo], CURLOPT_RETURNTRANSFER, 1);
 
-    curl_multi_add_handle($multiCall, $handles[$module]);
+    curl_multi_add_handle($multiCall, $handles[$repo]);
 }
 
 // Execute all handles
