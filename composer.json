@@ -20,12 +20,6 @@
     "config": {
         "sort-packages": true
     },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.1-dev",
-            "dev-develop": "1.2-dev"
-        }
-    },
     "require": {
         "php": "^5.6 || ^7.0"
     },
@@ -37,8 +31,5 @@
         "classmap": [
             "Module.php"
         ]
-    },
-    "replace": {
-        "zfcampus/apigility-documentation": "self.version"
     }
 }
