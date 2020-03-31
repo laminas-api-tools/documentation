@@ -199,7 +199,7 @@ class HybridAuthControllerFactory
 
 > ### Factories vary based on ServiceManager version
 >
-> If you are using zend-servicemanager v2, you will need to change the above
+> If you are using laminas-servicemanager v2, you will need to change the above
 > factory slightly, as that version passes a
 > `Laminas\Mvc\Controller\ControllerPluginManager` instance to the factory instead of
 > the application service manager instance. In that case, change the argument to

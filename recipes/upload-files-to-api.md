@@ -9,7 +9,7 @@ How can you allow uploading files via your API?
 Answer
 ------
 
-Zend Framework 2 provides a variety of classes surrounding file upload functionality, including
+Laminas provides a variety of classes surrounding file upload functionality, including
 [a set of validators](https://docs.laminas.dev/laminas-validator/validators/file/intro/)
 (used to validate whether the file was uploaded, as well as whether it meets specific criteria such
 as file size, extension, MIME type, etc.),

@@ -11,9 +11,9 @@
     "homepage": "https://api-tools.getlaminas.org",
     "support": {
         "docs": "https://api-tools.getlaminas.org/documentation",
-        "issues": "https://github.com/laminas-api-tools/api-tools-documentation/issues",
-        "source": "https://github.com/laminas-api-tools/api-tools-documentation",
-        "rss": "https://github.com/laminas-api-tools/api-tools-documentation/releases.atom",
+        "issues": "https://github.com/laminas-api-tools/documentation/issues",
+        "source": "https://github.com/laminas-api-tools/documentation",
+        "rss": "https://github.com/laminas-api-tools/documentation/releases.atom",
         "chat": "https://laminas.dev/chat",
         "forum": "https://discourse.laminas.dev"
     },
