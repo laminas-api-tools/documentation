@@ -10,9 +10,8 @@ creating the `TableGateway` instance does not provide a way to specify features!
 Delegator Factories
 -------------------
 
-[Delegator
-Factories](http://ocramius.github.io/blog/zend-framework-2-delegator-factories-explained/) are a way
-to "decorate" an instance returned by the Zend Framework `ServiceManager` in order to provide
+[Delegator Factories](https://docs.laminas.dev/laminas-servicemanager/delegators/) are a way
+to "decorate" an instance returned by the Laminas `ServiceManager` in order to provide
 pre-conditions or alter the instance normally returned. The following solution defines a delegator
 factory that can be selectively associated with DB-Connected `TableGateway` instances in order to
 inject features as specified in configuration.

@@ -10,7 +10,7 @@ one or more other tables; how to I accomplish this?
 Answer
 ------
 
-zend-db provides SQL JOIN syntax via its `Laminas\Db\Sql` subcomponent. However,
+laminas-db provides SQL JOIN syntax via its `Laminas\Db\Sql` subcomponent. However,
 DB-Connected REST services use `Laminas\Db\TableGateway`, which does not provide
 this out-of-the-box. As such, we will need to make a few changes to our
 application to make this work.
@@ -82,7 +82,7 @@ WHERE u.id = ?
 
 ### Creating a JOIN
 
-zend-db provides SQL abstraction, which includes abstraction for JOIN
+laminas-db provides SQL abstraction, which includes abstraction for JOIN
 statements. Generally speaking, you will create a SQL instance, from which you
 will generate a `Select` object.
 
@@ -94,7 +94,7 @@ $sql = new Sql($adapter);
 $select = $sql->select();
 ```
 
-You will then use the zend-db SQL DSL to build the statement you wish to execute.
+You will then use the laminas-db SQL DSL to build the statement you wish to execute.
 To follow our original examples, we'll first generate a statement we can use to
 pull all users with their associated cities:
 
@@ -107,10 +107,10 @@ $select
 
 The above indicates we are selecting from the table "users" and aliasing it in
 the SQL statement to "u". From it, we are retriving the columns "id" and "name";
-note that we do not need to prefix these, as zend-db will do that for us. Next,
+note that we do not need to prefix these, as laminas-db will do that for us. Next,
 we tell it to perform a JOIN on the "locations" table (aliasing it to "l"),
 where the "location_id" from the "users" table matches the "id" from the
-"locations" table. Finally, we're telling zend-db we only want the "city" column
+"locations" table. Finally, we're telling laminas-db we only want the "city" column
 from the "locations" table when we get the results.
 
 Next, we'll generate a statement for retrieving a single user:
@@ -127,7 +127,7 @@ This looks almost identicial to the previous example. The primary difference is
 the new `where()` clause. Note that in this case, we _do_ need to disambiguate
 the column we are testing against, and we use the alias to do so.
 
-When using a vanilla zend-db adapter, you then would execute the following to
+When using a vanilla laminas-db adapter, you then would execute the following to
 get results from either of the above:
 
 ```php
@@ -135,7 +135,7 @@ $statement = $sql->prepareStatementForSqlObject($select);
 $results = $statement->execute();
 ```
 
-If you are using a normal REST resource (_not_ DB-Connected), and using zend-db
+If you are using a normal REST resource (_not_ DB-Connected), and using laminas-db
 or a table gateway to back it, you can likely pull the above into your existing
 resource, and, with a little work, have it returning your entities and
 collections.
@@ -163,7 +163,7 @@ explicit approach that provides extensions to these two classes.
 
 To start, we will create a custom `TableGateway` implementation,
 `Users\V1\Rest\Users\UsersTableGateway`. We will use our knowledge of creating
-JOIN statements in zend-db from above to create two new methods,
+JOIN statements in laminas-db from above to create two new methods,
 `getUserWithCity($id)`, and `getUsersWithCities()`.
 
 ```php
@@ -203,7 +203,7 @@ class UsersTableGateway extends TableGateway
 ```
 
 You'll note a couple differences in these implementations from the original pure
-zend-db examples we had earlier.
+laminas-db examples we had earlier.
 
 First, instead of manually instantiating a `Laminas\Db\Sql\Sql` instance, we pull
 it from the table gateway instance directly. This is useful, as it already has
@@ -232,8 +232,8 @@ We can do that by creating a factory. A `Laminas\Db\TableGateway\TableGateway`
 instance expects up to five arguments:
 
 - The table name.
-- The zend-db adapter to use.
-- An array of [features](https://docs.zendframework.com/zend-db/table-gateway/#tablegateway-features),
+- The laminas-db adapter to use.
+- An array of [features](https://docs.laminas.dev/laminas-db/table-gateway/#tablegateway-features),
   if any are needed.
 - A result set prototype instance.
 - A `Sql` instance to use as a prototype.

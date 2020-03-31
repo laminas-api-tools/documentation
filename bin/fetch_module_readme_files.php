@@ -1,12 +1,12 @@
 <?php
 
 /**
- * @see       https://github.com/laminas-api-tools/api-tools-documentation for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-documentation/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-documentation/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas-api-tools/documentation for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/documentation/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/documentation/blob/master/LICENSE.md New BSD License
  */
 
-$modules = array(
+$modules = [
     'laminas-api-tools/api-tools',
     'laminas-api-tools/api-tools-admin',
     'laminas-api-tools/api-tools-documentation',
@@ -30,19 +30,19 @@ $modules = array(
     'laminas-api-tools/api-tools-versioning',
     'zfcampus/zf-console',
     'zfcampus/zf-deploy',
-);
+];
 
 $uriTemplate  = 'https://raw.githubusercontent.com/%s/master/README.md';
 $pathTemplate = realpath(__DIR__) . '/../modules/%s.md';
-$regexReplace = array(
-    array('pattern' => '#\n\[\!\[build status\].*?\n#is',    'replacement' => ''),
-    array('pattern' => '#\n\[\!\[coverage status\].*?\n#is', 'replacement' => ''),
-    array('pattern' => '#\[(.*)\]\(((?![http|\#]).+)\)#is', 'replacement' => '[$1](https://github.com/laminas-api-tools/%s/tree/master/$2)')
-);
+$regexReplace = [
+    ['pattern' => '#\n\[\!\[build status\].*?\n#is',    'replacement' => ''],
+    ['pattern' => '#\n\[\!\[coverage status\].*?\n#is', 'replacement' => ''],
+    ['pattern' => '#\[(.*)\]\(((?![http|\#]).+)\)#is', 'replacement' => '[$1](https://github.com/laminas-api-tools/%s/tree/master/$2)'],
+];
 
 // Set up multicall
 $multiCall   = curl_multi_init();
-$handles     = array();
+$handles     = [];
 
 // Add handles for all modules
 foreach ($modules as $module) {
@@ -61,7 +61,7 @@ do {
 } while ($running > 0);
 
 // Get content and close handles
-$results = array();
+$results = [];
 foreach ($handles as $module => $handle) {
     $results[$module] = curl_multi_getcontent($handle);
     curl_multi_remove_handle($multiCall, $handle);

@@ -8,7 +8,7 @@ containing details on the validation failures.
 For each service, API Tools allows you to configure a fieldset that is to be used when data is
 passed to the service. To accomplish this, API Tools uses the
 [api-tools-content-validation](https://github.com/laminas-api-tools/api-tools-content-validation) module to create 
-[Zend Framework 2 input filters](http://framework.zend.com/manual/2.3/en/modules/zend.input-filter.intro.html),
+[Laminas input filters](https://docs.laminas.dev/laminas-inputfilter/intro/),
 then executes the input filter associated with a service when data is submitted.
 
 > ## Note: Content Validation Request Methods
@@ -17,9 +17,9 @@ then executes the input filter associated with a service when data is submitted.
 > validate query string parameters, you will need to write your own logic for those tasks.
 
 _Input filters_ accomplish the jobs of filtering (via the
-[Laminas\Filter](http://framework.zend.com/manual/2.3/en/modules/zend.filter.html) component) and
-validating (via the [Laminas\Validator](http://framework.zend.com/manual/2.3/en/modules/zend.validator.html)
-component). To quote the Zend Framework manual on the purpose of input filters:
+[Laminas\Filter](https://docs.laminas.dev/laminas-filter/intro/) component) and
+validating (via the [Laminas\Validator](https://docs.laminas.dev/laminas-validator/intro/)
+component). To quote the Laminas manual on the purpose of input filters:
 
 > The `Laminas\InputFilter` component can be used to filter and validate generic sets of input data.
 > For instance, you could use it to filter `$_GET` or `$_POST` values, CLI arguments, etc.

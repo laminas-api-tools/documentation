@@ -6,7 +6,7 @@ Advanced Authentication and Authorization
 Authentication is provided via the `Laminas\Authentication` component, authorization via the
 `Laminas\Permissions` components, and MVC bindings are provided via the
 [api-tools-mvc-auth](https://github.com/laminas-api-tools/api-tools-mvc-auth) module. This module's purpose is
-to deliver a generalized solution that adds events, services, and models into the Zend Framework 2 MVC
+to deliver a generalized solution that adds events, services, and models into the Laminas MVC
 lifecycle that can be utilized to simplify both authentication and authorization.
 
 ## Events
