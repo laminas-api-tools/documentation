@@ -44,7 +44,7 @@ The latter capability is only provided via manual configuration at this time.
 The values for each key must be a valid input filter as defined either in the `input_filter_specs`
 configuration (which is what the API Tools Admin UI manipulates), or a valid input filter service
 registered with the `input_filters` configuration (or within the `getInputFilterConfig()` method of
-a Zend Framework module).
+a Laminas module).
 
 Since version 1.5.0 of api-tools-content-validation, when a `GET` request is made, the
 input filter element keys are used as a query whitelist, and merged with those

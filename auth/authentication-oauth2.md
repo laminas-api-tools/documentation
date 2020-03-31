@@ -100,10 +100,10 @@ and a `password` **testpass**. We will use this data in the following use cases:
 
 All sensitive data such as `client_secret` (in the `oauth_clients` table) and `password` (in the
 `oauth_users` table), are hashed by API Tools using the
-[bcrypt](http://en.wikipedia.org/wiki/Bcrypt) algorithm. If you want to generate the bcrypt value of
+[bcrypt](https://en.wikipedia.org/wiki/Bcrypt) algorithm. If you want to generate the bcrypt value of
 a plaintext password, you can use the
-[Laminas\Crypt\Password\Bcrypt](http://framework.zend.com/manual/2.2/en/modules/zend.crypt.password.html#bcrypt)
-component of Zend Framework. Also included is a tool to generate bcrypt hash values from the
+[Laminas\Crypt\Password\Bcrypt](https://docs.laminas.dev/laminas-crypt/password/#bcrypt)
+component of Laminas. Also included is a tool to generate bcrypt hash values from the
 command line; this tool is located
 [in the `api-tools-oauth2` repository](https://github.com/laminas-api-tools/api-tools-oauth2/tree/master/bin/bcrypt.php)
 For instance, to
@@ -168,7 +168,7 @@ If desired, you can customize the view script by overriding it.
 >
 > To override the view template `oauth/authorize`, update the `template_map`
 > value of the `view_manager` configuration in the `config.module.php`
-> of a Zend Framework module you have defined in your application as follows:
+> of a Laminas module you have defined in your application as follows:
 >
 > ```php
 > 'view_manager' => [
@@ -196,7 +196,7 @@ Like the authorization page, this view script can be customized.
 > The best way to customize the "receive code" page is to override the view template
 > `oauth/receive-code` by updating the `template_map` value of the
 > `view_manager` configuration in the `config.module.php`
-> of a Zend Framework module you have defined in your application:
+> of a Laminas module you have defined in your application:
 >
 > ```php
 > 'view_manager' => [

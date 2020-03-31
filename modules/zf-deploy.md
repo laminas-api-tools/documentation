@@ -13,7 +13,7 @@ ZIP, TAR, TGZ (.TAR.GZ), .ZPK (the deployment file format of [Zend Server 6](htt
 
 ## Requirements
   
-Please see the [composer.json](https://github.com/zendframework/zf-deploy/tree/master/composer.json) file.
+Please see the [composer.json](https://github.com/zfcampus/zf-deploy/tree/master/composer.json) file.
 
 ## Installation
 

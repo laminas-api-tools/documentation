@@ -2,7 +2,7 @@ Basic Usage
 ===========
 
 The [api-tools-content-validation](https://github.com/laminas-api-tools/api-tools-content-validation) module utilizes
-[Zend Framework's InputFilter component](https://docs.laminas.dev/laminas-inputfilter).
+[Laminas' InputFilter component](https://docs.laminas.dev/laminas-inputfilter).
 API Tools takes information from the UI and writes it to the target API's module configuration file.
 For more information on the theory of input filters, [read the Content Validation
 introduction](/content-validation/intro.md).
@@ -96,7 +96,7 @@ response](/api-primer/error-reporting.md) will be returned immediately.
 > ## Note: Controller Service Name
 >
 > The _controller service name_ is the internal name for the service within API Tools, and
-> is representative of the code that the Zend Framework 2 MVC layer will execute when routing
+> is representative of the code that the Laminas MVC layer will execute when routing
 > matches the given service.
 
 Accessing Filtered Data
@@ -157,8 +157,8 @@ if ($inputFilter) {
 
 ### Via dependency injection
 
-Since input filters are named services, you can also pull them from the [service
-manager](http://framework.zend.com/manual/2.3/en/modules/zend.service-manager.intro.html) within
+Since input filters are named services, you can also pull them from the
+[service manager](https://docs.laminas.dev/laminas-servicemanager/) within
 factories in order to inject your object.  
 
 For an example, the above examples define an input filter by the name

@@ -1,5 +1,5 @@
 Doctrine in Laminas API Tools
-==============================
+=============================
 
 This module provides the classes for integrating Doctrine with Laminas API Tools.
 

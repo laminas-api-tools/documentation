@@ -25,13 +25,13 @@ to the same logic you would use to validate a form. This requires that your form
 does not operate directly on `$_POST` or `$_GET`, but instead allows passing the data set to
 validate.
 
-Zend Framework 2 offers an approach similar to the latter, via the
-[`Laminas\InputFilter`](http://framework.zend.com/manual/2.3/en/modules/zend.input-filter.intro.html)
+Laminas offers an approach similar to the latter, via the
+[`Laminas\InputFilter`](https://docs.laminas.dev/laminas-inputfilter/intro/)
 component. This component allows you to describe and validate data sets of arbitrary complexity.
 Additionally, it allows for the ability to both set custom error messages as well as retrieve
 validation error messages in a structured format.  API Tools'
 [api-tools-content-validation](https://github.com/laminas-api-tools/api-tools-content-validation) module provides
-functionality for mapping Zend Framework 2 input filters to services, and utilizes [API
+functionality for mapping Laminas input filters to services, and utilizes [API
 Problem](/api-primer/error-reporting.md#api-problem) in order to return validation error messages to
 the end-user of the API.
 
@@ -100,7 +100,7 @@ collection and entity URIs, allowing an input filter for each HTTP method for ea
 Summary
 -------
 
-Zend Framework 2 provides the ability to short-circuit the request lifecycle at any point by
+Laminas provides the ability to short-circuit the request lifecycle at any point by
 returning a "response" object. API Tools leverages this fact by registering an event listener
 after [content negotiation](/api-primer/content-negotiation.md) completes, but before the service
 itself executes, ensuring we intercept validation errors early.

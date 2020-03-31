@@ -10,7 +10,7 @@ package file containing the APIs ready for deployment.
 ![API Package](/asset/api-tools-documentation/img/api-package-menu.png)
 
 The package feature of API Tools is based on the usage of [zf-deploy](https://github.com/zfcampus/zf-deploy),
-a command line tool to package [Zend Framework](http://framework.zend.com/) (and
+a command line tool to package [Laminas](https://docs.laminas.dev/) (and
 Laminas MVC) applications in a single file ready to be deployed.
 
 Preparing to deploy
