@@ -1,8 +1,6 @@
-Laminas API Tools Admin
-===============
+# Laminas API Tools Admin
 
-Introduction
-------------
+## Introduction
 
 The `api-tools-admin` module delivers the backend management API and frontend Admin UI used to
 manage APIs in Laminas API Tools.
@@ -11,13 +9,11 @@ manage APIs in Laminas API Tools.
 >
 > **DO NOT** enable this module in production systems.
 
-Requirements
-------------
+## Requirements
 
 Please see the [composer.json](https://github.com/laminas-api-tools/api-tools-admin/tree/master/composer.json) file.
 
-Installation
-------------
+## Installation
 
 Run the following `composer` command:
 
@@ -31,14 +27,14 @@ Finally, add the module name to your project's `config/application.config.php` u
 key:
 
 ```php
-return array(
+return [
     /* ... */
-    'modules' => array(
+    'modules' => [
         /* ... */
         'Laminas\ApiTools\Admin',
-    ),
+    ],
     /* ... */
-);
+];
 ```
 
 Typically, this module should be used along with
@@ -47,8 +43,7 @@ enable the module in your application. When doing so, you will add the module to
 `config/development.config.php.dist` file instead of the `config/application.config.php` file, and
 enable it via `php public/index.php development enable`.
 
-Upgrading
----------
+## Upgrading
 
 We strive to make upgrading as simple as a `composer update`; however, from time
 to time, there may be other steps involved. This section documents those.
@@ -168,8 +163,7 @@ update your application using the following steps:
 > $ ./vendor/bin/laminas-development-mode status
 > ```
 
-Configuration
--------------
+## Configuration
 
 Since this particular module is responsible for providing APIs and the Laminas API Tools Admin UI, it has a
 significant amount of configuration that it requires in order to function in a development
@@ -191,13 +185,11 @@ values:
 - `Laminas\ApiTools\Admin\Model\ModulePathSpec::PSR_0` ('psr-0')
 - `Laminas\ApiTools\Admin\Model\ModulePathSpec::PSR_4` ('psr-4')
 
-Routes
-------
+## Routes
 
 This module exposes HTTP accessible API endpoints and static assets.
 
-API Endpoints
--------------
+## API Endpoints
 
 All routes are prefixed with `/api-tools` by default.
 
@@ -229,19 +221,19 @@ overrides of individual values in it. All overrides are written to a single
 file, `config/autoload/development.php`; you can override that location in your
 configuration via the `api-tools-configuration.config-file` key.
 
-- `Accept`: `application/json`, `application/vnd.laminascampus.v1.config+json`
+- `Accept`: `application/json`, `application/vnd.laminas-api-tools.v1.config+json`
 
   `application/json` will deliver representations as a flat array of key/value pairs,
   with the keys being dot-separated values, just as you would find in INI.
 
-  `application/vnd.laminascampus.v1.config+json` will deliver the configuration as a tree.
+  `application/vnd.laminas-api-tools.v1.config+json` will deliver the configuration as a tree.
 
-- `Content-Type`: `application/json`, `application/vnd.laminascampus.v1.config+json`
+- `Content-Type`: `application/json`, `application/vnd.laminas-api-tools.v1.config+json`
 
   `application/json` indicates you are sending key/value pairs, with keys being dot-separated
   values, as you would find in INI files.
 
-  `application/vnd.laminascampus.v1.config+json` indicates you are sending a nested array/object of
+  `application/vnd.laminas-api-tools.v1.config+json` indicates you are sending a nested array/object of
   configuration.
 
 - Methods: `GET`, `PATCH`
@@ -661,8 +653,7 @@ content type.
 
 
 
-API Models
-----------
+## API Models
 
 The following is a list of various models either returned via the API endpoints listed above, or
 expected for the request bodies.
@@ -951,8 +942,7 @@ respectively.
 }
 ```
 
-Laminas Events
-----------
+## Laminas Events
 
 ### Listeners
 
@@ -964,8 +954,7 @@ an _entity_ or that of a _collection_.  If either is detected, the listener is a
 to the `Laminas\ApiTools\Hal\Plugin\Hal` events `renderEntity` and `renderCollection.entity`, which
 ensures they will be dispatched when the HAL plugin has an opportunity to start rendering.
 
-Laminas Services
-------------
+## Laminas Services
 
 ### Models
 
