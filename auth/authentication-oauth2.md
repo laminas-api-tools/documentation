@@ -74,7 +74,7 @@ Choose which adapter to use for the OAuth2 dataset. You can manage the dataset u
 relational database (the OAuth2 library API Tools utilizes uses
 [PDO](http://www.php.net/manual/en/book.pdo.php) specifically) or
 [MongoDB](https://www.mongodb.org/). Other adapters are available such as
-[api-tools-oauth2-doctrine](https://github.com/API-Skeletons/api-tools-oauth2-doctrine).
+[oauth2-doctrine](https://github.com/API-Skeletons/oauth2-doctrine).
 
 When you select the OAuth2 PDO adapter, you will see the following form:
 
