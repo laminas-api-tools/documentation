@@ -164,7 +164,7 @@ class Module
 
         // Add Authentication Adapter for session
         $defaultAuthenticationListener = $container->get(DefaultAuthenticationListener::class);
-        $defaultAuthenticationListener->attach(new Authentication\AuthenticationAdapter());
+        $defaultAuthenticationListener->attach(new Authentication\Adapter\SessionAdapter());
     }
 }
 ```
@@ -252,6 +252,15 @@ So we need to add Authorization to the application:
 First we'll extend the onBootstrap we just created:
 
 ```php
+namespace Application;
+
+use Laminas\ApiTools\MvcAuth\Authentication\DefaultAuthenticationListener;
+use Laminas\EventManager\EventInterface;
+
+use Laminas\ApiTools\MvcAuth\MvcAuthEvent;
+
+class Module
+{
     public function onBootstrap(EventInterface $e)
     {
         $app = $e->getApplication();
@@ -269,6 +278,8 @@ First we'll extend the onBootstrap we just created:
             100
         );
     }
+    
+}
 ```
 
 And we need to create the `AuthorizationListener` we just configured:
@@ -285,6 +296,8 @@ final class AuthorizationListener
     public function __invoke(MvcAuthEvent $mvcAuthEvent)
     {
         $authorization = $mvcAuthEvent->getAuthorizationService();
+        
+        $authorization->addRole('user');
 
         // Deny from all
         $authorization->deny();
