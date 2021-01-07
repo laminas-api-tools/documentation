@@ -296,11 +296,12 @@ final class AuthorizationListener
     public function __invoke(MvcAuthEvent $mvcAuthEvent)
     {
         $authorization = $mvcAuthEvent->getAuthorizationService();
-        
-        $authorization->addRole('user');
 
         // Deny from all
         $authorization->deny();
+        
+        // Add new user role
+        $authorization->addRole('user');
 
         $authorization->addResource(IndexController::class . '::index');
         $authorization->allow('guest', IndexController::class . '::index');
