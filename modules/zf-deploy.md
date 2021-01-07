@@ -3,7 +3,6 @@
 > ## Repository abandoned 2019-12-31
 >
 > This repository is abandoned, and has no replacement provided.
-
 ## Introduction
 
 **ZFDeploy** is a command line tool to deploy [Zend Framework](http://framework.zend.com) applications.
@@ -13,7 +12,7 @@ ZIP, TAR, TGZ (.TAR.GZ), .ZPK (the deployment file format of [Zend Server 6](htt
 
 ## Requirements
   
-Please see the [composer.json](https://github.com/zfcampus/zf-deploy/tree/master/composer.json) file.
+Please see the [composer.json](https://github.com/laminas-api-tools/zf-deploy/tree/master/composer.json) file.
 
 ## Installation
 

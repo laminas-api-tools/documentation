@@ -3,7 +3,6 @@
 > ## Repository abandoned 2019-12-05
 >
 > This repository is no longer maintained. Other projects in the ecosystem, such as symfony/console, provide more robust and flexible solutions, and we recommend users target those runtimes instead.
-
 ## Introduction
 
 `zf-console` provides functionality on top of `Zend\Console`, specifically a methodology for
@@ -13,7 +12,7 @@ well as support for shell autocompletion.
 
 ## Requirements
   
-Please see the [composer.json](https://github.com/zfcampus/zf-console/tree/master/composer.json) file.
+Please see the [composer.json](https://github.com/laminas-api-tools/zf-console/tree/master/composer.json) file.
 
 ## Installation
 
