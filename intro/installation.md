@@ -36,7 +36,7 @@ $ composer install
 > execute the following within your project root:
 >
 > ```console
-> $ rm composer.lock vendor
+> $ rm composer.lock && rm -rf vendor
 > $ composer install
 > ```
 >
