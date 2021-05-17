@@ -1,7 +1,6 @@
 {
     "name": "laminas-api-tools/documentation",
     "description": "Laminas API Tools Documentation",
-    "license": "BSD-3-Clause",
     "keywords": [
         "laminas",
         "api-tools",
@@ -9,17 +8,7 @@
         "framework"
     ],
     "homepage": "https://api-tools.getlaminas.org",
-    "support": {
-        "docs": "https://api-tools.getlaminas.org/documentation",
-        "issues": "https://github.com/laminas-api-tools/documentation/issues",
-        "source": "https://github.com/laminas-api-tools/documentation",
-        "rss": "https://github.com/laminas-api-tools/documentation/releases.atom",
-        "chat": "https://laminas.dev/chat",
-        "forum": "https://discourse.laminas.dev"
-    },
-    "config": {
-        "sort-packages": true
-    },
+    "license": "BSD-3-Clause",
     "require": {
         "php": "^5.6 || ^7.0"
     },
@@ -27,9 +16,20 @@
         "erusev/parsedown": ">=0.9.4 for rendering GitHub-flavored Markdown in PHP",
         "rwoverdijk/assetmanager": "~1.3 for exposing image assets"
     },
+    "config": {
+        "sort-packages": true
+    },
     "autoload": {
         "classmap": [
             "Module.php"
         ]
+    },
+    "support": {
+        "issues": "https://github.com/laminas-api-tools/documentation/issues",
+        "forum": "https://discourse.laminas.dev",
+        "chat": "https://laminas.dev/chat",
+        "source": "https://github.com/laminas-api-tools/documentation",
+        "docs": "https://api-tools.getlaminas.org/documentation",
+        "rss": "https://github.com/laminas-api-tools/documentation/releases.atom"
     }
 }
