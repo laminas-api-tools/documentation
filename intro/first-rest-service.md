@@ -166,7 +166,7 @@ API Tools provides a number of sane defaults:
 > allowing multiple URIs to resolve to the same resource.
 
 In the REST service page, you'll see a field named "Hydrator Service Name" with a value
-of `Laminas\Hydrator\ArraySerializable`. We're going to change this to work with our `StatusLib`
+of `Laminas\Hydrator\ArraySerializableHydrator`. We're going to change this to work with our `StatusLib`
 example library. For the "Hydrator Service Name", select the value
 `Laminas\Hydrator\ObjectProperty`.
 
@@ -176,7 +176,7 @@ example library. For the "Hydrator Service Name", select the value
 >
 > _Hydrators_ are objects that allow for casting an associative array to a specific object type and
 > vice versa. Each hydrator employs a different strategy for how this is done. The default hydrator
-> type that API Tools uses is the `ArraySerializable` type, which expects an object to implement two
+> type that API Tools uses is the `ArraySerializableHydrator` type, which expects an object to implement two
 > methods:
 >
 > - `getArrayCopy()` for extracting an array representation
