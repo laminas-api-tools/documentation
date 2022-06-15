@@ -168,7 +168,7 @@ API Tools provides a number of sane defaults:
 In the REST service page, you'll see a field named "Hydrator Service Name" with a value
 of `Laminas\Hydrator\ArraySerializableHydrator`. We're going to change this to work with our `StatusLib`
 example library. For the "Hydrator Service Name", select the value
-`Laminas\Hydrator\ObjectProperty`.
+`Laminas\Hydrator\ObjectPropertyHydrator`.
 
 ![Edit REST Parameter Settings](/asset/api-tools-documentation/img/intro-first-rest-service-settings-edit.png)
 
@@ -184,7 +184,7 @@ example library. For the "Hydrator Service Name", select the value
 >
 > (These are the same methods used in PHP's `ArrayObject`!)
 >
-> The `ObjectProperty` hydrator will extract any public properties of an object when creating an
+> The `ObjectPropertyHydrator` hydrator will extract any public properties of an object when creating an
 > array representation, and populate public properties of the object from an arraywhen casting to an
 > object.
 
