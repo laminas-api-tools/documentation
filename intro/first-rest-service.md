@@ -407,7 +407,7 @@ lists, and we are not defining those operations.
 
 How will we get the `$mapper` into the resource? For that, we'll edit our factory. Open
 the file `module/Status/src/V1/Rest/Status/StatusResourceFactory.php` in an editor,
-and modify it so it reads as follows (you should only need to change the `return` line inside the
+and modify it so it reads as follows (add `use StatusLib\Mapper;` and change the `return` line inside the
 `__invoke()` method):
 
 ```php
