@@ -406,10 +406,12 @@ You'll notice that we're not updating all methods in the class. Several methods 
 lists, and we are not defining those operations.
 
 How will we get the `$mapper` into the resource? For that, we'll edit our factory. Open
-the file `module/Status/src/V1/Rest/Status/StatusResourceFactory.php` in an editor,
-and modify it so it reads as follows (you should only need to change the `return` line inside the
-`__invoke()` method):
+the file `module/Status/src/V1/Rest/Status/StatusResourceFactory.php` in an editor.
 
+Import the `StatusLib\MapperInterface` class. Add the line `use StatusLib\Mapper;` after the
+namespace declaration. Next, change the `return` line inside the `__invoke()` method.
+
+The factory should look like this:
 ```php
 <?php
 namespace Status\V1\Rest\Status;
