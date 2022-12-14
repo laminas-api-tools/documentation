@@ -1,9 +1,5 @@
 Laminas Doctrine QueryBuilder
-========================[![Total Downloads](https://poser.pugx.org/laminas-api-tools/api-tools-doctrine-querybuilder/downloads)](https://packagist.org/packages/laminas-api-tools/api-tools-doctrine-querybuilder)
-
-This library provides query builder directives from array parameters. This library was designed
-to apply filters from an HTTP request to give an API fluent filter and order-by dialects.
-
+========================
 
 Philosophy
 ----------

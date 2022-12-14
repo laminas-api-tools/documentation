@@ -1,4 +1,5 @@
 # Swagger Documentation Provider for Laminas API Tools
+
 ## Introduction
 
 This module provides Laminas API Tools the ability to show API documentation through a

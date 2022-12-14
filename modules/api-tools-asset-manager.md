@@ -1,6 +1,6 @@
 # api-tools-asset-manager
 
-api-tools-asset-manager is a composer plugin that will copy configured web-accessible
+`api-tools-asset-manager` is a composer plugin that will copy configured web-accessible
 assets into the public document root of your Laminas application. It uses
 the configuration format of [rwoverdijk/AssetManager](https://github.com/rwoverdijk/AssetManager),
 and specifically the subset:

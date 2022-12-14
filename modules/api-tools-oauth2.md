@@ -1,4 +1,5 @@
 # api-tools-oauth2
+
 Laminas module for [OAuth2](http://oauth.net/2/) authentication.
 
 This module uses the [oauth2-server-php](https://github.com/bshaffer/oauth2-server-php)

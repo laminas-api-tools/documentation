@@ -1,4 +1,5 @@
 # Laminas Configuration
+
 ## Introduction
 
 api-tools-configuration is a module that provides configuration services that provide for the

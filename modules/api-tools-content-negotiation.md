@@ -1,4 +1,5 @@
 # Laminas Content Negotiation
+
 ## Introduction
 
 `api-tools-content-negotiation` is a module for automating content negotiation tasks within a Laminas
@@ -16,9 +17,9 @@ The following features are provided
   immediately rejected with a `415 Unsupported Media Type` response.
 
 ## Requirements
-  
+
 Please see the [composer.json](https://github.com/laminas-api-tools/api-tools-content-negotiation/tree/master/composer.json) file.
- 
+
 ## Installation
 
 Run the following `composer` command:
@@ -121,7 +122,7 @@ controller to return either JSON or HTML output:
             'application/*+json',
         ],
         'Laminas\ApiTools\ContentNegotiation\ViewModel' => [
-            'text/html',            
+            'text/html',
         ],
     ],
 ],
@@ -250,7 +251,6 @@ function:
 'service_manager' => [
     'factories' => [
         ContentTypeListener::class        => InvokableFactory::class,
-        'Request'                         => Factory\RequestFactory::class,
         AcceptListener::class             => Factory\AcceptListenerFactory::class,
         AcceptFilterListener::class       => Factory\AcceptFilterListenerFactory::class,
         ContentTypeFilterListener::class  => Factory\ContentTypeFilterListenerFactory::class,
